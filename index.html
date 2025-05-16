@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ひらがな・カタカナ⇔ローマ字クイズ</title>
+  <title>さくらにほんご クイズ（難易度別）</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     * { box-sizing: border-box; }
@@ -34,6 +34,9 @@
     }
     .score-animate {
       animation: scorePop 0.4s ease;
+    }
+    .rotate-180 {
+      transform: rotate(180deg);
     }
   </style>
 </head>
@@ -70,21 +73,45 @@
       <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira'); toggleMobileMenu();">Roman → Hiragana</li>
       <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma'); toggleMobileMenu();">Katakana → Roman</li>
       <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata'); toggleMobileMenu();">Roman → Katakana</li>
-      <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn'); toggleMobileMenu();">Japanese → English</li>
-
+      <!-- 難易度別ツリー -->
+      <li>
+        <div onclick="toggleSubMenu('jpToEnMenuMobile')" class="flex items-center cursor-pointer font-semibold">
+          Japanese → English
+          <svg id="jpToEnMenuMobileIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        <ul id="jpToEnMenuMobile" class="ml-4 mt-1 space-y-1 hidden">
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-easy'); toggleMobileMenu();">初級（Easy）</li>
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-medium'); toggleMobileMenu();">中級（Medium）</li>
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-hard'); toggleMobileMenu();">上級（Hard）</li>
+        </ul>
+      </li>
     </ul>
   </nav>
 
   <div class="flex flex-1 flex-col md:flex-row">
     <!-- PC用ナビ -->
-    <nav class="hidden md:block w-52 bg-gray-800 text-white p-4">
+    <nav class="hidden md:block w-64 bg-gray-800 text-white p-4">
       <h2 class="text-lg font-semibold mb-4">Quiz Menu</h2>
       <ul class="space-y-2">
         <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma')">Hiragana → Roman</li>
         <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira')">Roman → Hiragana</li>
         <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma')">Katakana → Roman</li>
         <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata')">Roman → Katakana</li>
-        <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn')">Japanese → English</li>
+        <li>
+          <div onclick="toggleSubMenu('jpToEnMenu')" class="cursor-pointer font-semibold flex items-center">
+            Japanese → English
+            <svg id="jpToEnMenuIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          <ul id="jpToEnMenu" class="ml-4 mt-1 space-y-1 hidden">
+            <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-easy')">初級（Easy）</li>
+            <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-medium')">中級（Medium）</li>
+            <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-hard')">上級（Hard）</li>
+          </ul>
+        </li>
       </ul>
     </nav>
 
@@ -94,7 +121,7 @@
         Score: 0
       </div>
       <div id="mistakeDisplay" class="text-lg sm:text-xl font-semibold text-red-500 mb-2"></div>
-      <div id="question" class="text-4xl sm:text-6xl md:text-[100px] font-bold mb-10 text-center text-gray-800 drop-shadow-lg tracking-wide">
+      <div id="question" class="text-4xl sm:text-6xl md:text-[60px] font-bold mb-10 text-center text-gray-800 drop-shadow-lg tracking-wide">
         Choose Quiz from Menu！
       </div>
       <div id="choices" class="flex flex-wrap justify-center gap-4 w-full px-2 sm:px-0"></div>
@@ -114,26 +141,8 @@
   </footer>
 
   <script>
-    const quizData = [
-      { hira: "あ", kata: "ア", roma: "a" }, { hira: "い", kata: "イ", roma: "i" }, { hira: "う", kata: "ウ", roma: "u" },
-      { hira: "え", kata: "エ", roma: "e" }, { hira: "お", kata: "オ", roma: "o" }, { hira: "か", kata: "カ", roma: "ka" },
-      { hira: "き", kata: "キ", roma: "ki" }, { hira: "く", kata: "ク", roma: "ku" }, { hira: "け", kata: "ケ", roma: "ke" },
-      { hira: "こ", kata: "コ", roma: "ko" }, { hira: "さ", kata: "サ", roma: "sa" }, { hira: "し", kata: "シ", roma: "shi" },
-      { hira: "す", kata: "ス", roma: "su" }, { hira: "せ", kata: "セ", roma: "se" }, { hira: "そ", kata: "ソ", roma: "so" },
-      { hira: "た", kata: "タ", roma: "ta" }, { hira: "ち", kata: "チ", roma: "chi" }, { hira: "つ", kata: "ツ", roma: "tsu" },
-      { hira: "て", kata: "テ", roma: "te" }, { hira: "と", kata: "ト", roma: "to" }, { hira: "な", kata: "ナ", roma: "na" },
-      { hira: "に", kata: "ニ", roma: "ni" }, { hira: "ぬ", kata: "ヌ", roma: "nu" }, { hira: "ね", kata: "ネ", roma: "ne" },
-      { hira: "の", kata: "ノ", roma: "no" }, { hira: "は", kata: "ハ", roma: "ha" }, { hira: "ひ", kata: "ヒ", roma: "hi" },
-      { hira: "ふ", kata: "フ", roma: "fu" }, { hira: "へ", kata: "ヘ", roma: "he" }, { hira: "ほ", kata: "ホ", roma: "ho" },
-      { hira: "ま", kata: "マ", roma: "ma" }, { hira: "み", kata: "ミ", roma: "mi" }, { hira: "む", kata: "ム", roma: "mu" },
-      { hira: "め", kata: "メ", roma: "me" }, { hira: "も", kata: "モ", roma: "mo" }, { hira: "や", kata: "ヤ", roma: "ya" },
-      { hira: "ゆ", kata: "ユ", roma: "yu" }, { hira: "よ", kata: "ヨ", roma: "yo" }, { hira: "ら", kata: "ラ", roma: "ra" },
-      { hira: "り", kata: "リ", roma: "ri" }, { hira: "る", kata: "ル", roma: "ru" }, { hira: "れ", kata: "レ", roma: "re" },
-      { hira: "ろ", kata: "ロ", roma: "ro" }, { hira: "わ", kata: "ワ", roma: "wa" }, { hira: "を", kata: "ヲ", roma: "wo" },
-      { hira: "ん", kata: "ン", roma: "n" }
-    ];
 
-    const vocabQuizData = [
+    const vocabQuizDataEasy = [
       { jp: "学生", en: "student", roma: "gakusei" },
       { jp: "先生", en: "teacher", roma: "sensei" },
       { jp: "学校", en: "school", roma: "gakkou" },
@@ -227,15 +236,64 @@
       { jp: "橋", en: "bridge", roma: "hashi" },
       { jp: "交差点", en: "crossroad", roma: "kousaten" }
     ];
+    const vocabQuizDataMedium = [
+      { jp: "銀行", en: "bank", roma: "ginkou" },
+      { jp: "病院", en: "hospital", roma: "byouin" },
+      { jp: "駅", en: "station", roma: "eki" },
+      { jp: "郵便局", en: "post office", roma: "yuubinkyoku" },
+      { jp: "勉強", en: "study", roma: "benkyou" },
+      { jp: "映画", en: "movie", roma: "eiga" },
+      { jp: "旅行", en: "travel", roma: "ryokou" },
+      { jp: "写真", en: "photo", roma: "shashin" },
+      { jp: "友達", en: "friend", roma: "tomodachi" },
+      { jp: "天気", en: "weather", roma: "tenki" }
+    ];
+    const vocabQuizDataHard = [
+      { jp: "環境", en: "environment", roma: "kankyou" },
+      { jp: "経済", en: "economy", roma: "keizai" },
+      { jp: "技術", en: "technology", roma: "gijutsu" },
+      { jp: "伝統", en: "tradition", roma: "dentou" },
+      { jp: "資源", en: "resource", roma: "shigen" },
+      { jp: "制度", en: "system", roma: "seido" },
+      { jp: "責任", en: "responsibility", roma: "sekinin" },
+      { jp: "発展", en: "development", roma: "hatten" },
+      { jp: "構造", en: "structure", roma: "kouzou" },
+      { jp: "状況", en: "situation", roma: "joukyou" }
+    ];
+
+    // 既存のひらがな・カタカナ⇔ローマ字クイズ
+    const quizData = [
+      { hira: "あ", kata: "ア", roma: "a" }, { hira: "い", kata: "イ", roma: "i" }, { hira: "う", kata: "ウ", roma: "u" },
+      { hira: "え", kata: "エ", roma: "e" }, { hira: "お", kata: "オ", roma: "o" }, { hira: "か", kata: "カ", roma: "ka" },
+      { hira: "き", kata: "キ", roma: "ki" }, { hira: "く", kata: "ク", roma: "ku" }, { hira: "け", kata: "ケ", roma: "ke" },
+      { hira: "こ", kata: "コ", roma: "ko" }, { hira: "さ", kata: "サ", roma: "sa" }, { hira: "し", kata: "シ", roma: "shi" },
+      { hira: "す", kata: "ス", roma: "su" }, { hira: "せ", kata: "セ", roma: "se" }, { hira: "そ", kata: "ソ", roma: "so" },
+      { hira: "た", kata: "タ", roma: "ta" }, { hira: "ち", kata: "チ", roma: "chi" }, { hira: "つ", kata: "ツ", roma: "tsu" },
+      { hira: "て", kata: "テ", roma: "te" }, { hira: "と", kata: "ト", roma: "to" }, { hira: "な", kata: "ナ", roma: "na" },
+      { hira: "に", kata: "ニ", roma: "ni" }, { hira: "ぬ", kata: "ヌ", roma: "nu" }, { hira: "ね", kata: "ネ", roma: "ne" },
+      { hira: "の", kata: "ノ", roma: "no" }, { hira: "は", kata: "ハ", roma: "ha" }, { hira: "ひ", kata: "ヒ", roma: "hi" },
+      { hira: "ふ", kata: "フ", roma: "fu" }, { hira: "へ", kata: "ヘ", roma: "he" }, { hira: "ほ", kata: "ホ", roma: "ho" },
+      { hira: "ま", kata: "マ", roma: "ma" }, { hira: "み", kata: "ミ", roma: "mi" }, { hira: "む", kata: "ム", roma: "mu" },
+      { hira: "め", kata: "メ", roma: "me" }, { hira: "も", kata: "モ", roma: "mo" }, { hira: "や", kata: "ヤ", roma: "ya" },
+      { hira: "ゆ", kata: "ユ", roma: "yu" }, { hira: "よ", kata: "ヨ", roma: "yo" }, { hira: "ら", kata: "ラ", roma: "ra" },
+      { hira: "り", kata: "リ", roma: "ri" }, { hira: "る", kata: "ル", roma: "ru" }, { hira: "れ", kata: "レ", roma: "re" },
+      { hira: "ろ", kata: "ロ", roma: "ro" }, { hira: "わ", kata: "ワ", roma: "wa" }, { hira: "を", kata: "ヲ", roma: "wo" },
+      { hira: "ん", kata: "ン", roma: "n" }
+    ];
 
     let currentQuestion, currentMode, timer, timeLeft = 10;
     let score = 0;
     let mistakes = 0;
     let gameActive = false;
+    let currentVocabList = []; // 難易度別Japanese→English用
 
     function startQuiz(mode) {
-      if (mode === 'jpToEn') {
-        currentMode = 'jpToEn';
+      // Japanese→English 難易度別
+      if (mode.startsWith('jpToEn')) {
+        if (mode === 'jpToEn-easy') currentVocabList = vocabQuizDataEasy;
+        if (mode === 'jpToEn-medium') currentVocabList = vocabQuizDataMedium;
+        if (mode === 'jpToEn-hard') currentVocabList = vocabQuizDataHard;
+        currentMode = mode;
         score = 0;
         mistakes = 0;
         gameActive = true;
@@ -245,7 +303,7 @@
         getRandomQuestion();
         return;
       }
-
+      // 既存のモード
       currentMode = mode;
       score = 0;
       mistakes = 0;
@@ -279,24 +337,19 @@
       timeLeft = 10;
       updateTimer();
 
-      currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
-      let questionText, correctAnswer;
-
-      if (currentMode === 'jpToEn') {
-        currentQuestion = vocabQuizData[Math.floor(Math.random() * vocabQuizData.length)];
-        questionText = currentQuestion.jp;
-        correctAnswer = currentQuestion.en;
-
-        // 選択肢セット生成
+      // Japanese→English 難易度別
+      if (currentMode && currentMode.startsWith('jpToEn')) {
+        currentQuestion = currentVocabList[Math.floor(Math.random() * currentVocabList.length)];
+        const questionText = currentQuestion.jp;
+        const correctAnswer = currentQuestion.en;
         const choices = new Set();
         choices.add(correctAnswer);
         while (choices.size < 4) {
-          const rand = vocabQuizData[Math.floor(Math.random() * vocabQuizData.length)];
+          const rand = currentVocabList[Math.floor(Math.random() * currentVocabList.length)];
           choices.add(rand.en);
         }
         const shuffled = Array.from(choices).sort(() => Math.random() - 0.5);
 
-        // UI更新
         document.getElementById("question").textContent = questionText;
         const feedback = document.getElementById("feedback");
         feedback.textContent = "";
@@ -312,9 +365,6 @@
           choicesContainer.appendChild(btn);
         });
 
-        clearInterval(timer);
-        timeLeft = 10;
-        updateTimer();
         timer = setInterval(() => {
           timeLeft--;
           updateTimer();
@@ -326,6 +376,10 @@
 
         return;
       }
+
+      // 既存モード（ひらがな⇔ローマ字）
+      currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
+      let questionText, correctAnswer;
 
       if (currentMode === 'hiraToRoma') {
         questionText = currentQuestion.hira;
@@ -426,7 +480,7 @@
       gameActive = false;
       clearInterval(timer);
       document.getElementById("gameOver").classList.remove("hidden");
-      document.getElementById("finalScore").textContent = `Youre Scoer is ${score} ！`;
+      document.getElementById("finalScore").textContent = `Your Score is ${score}！`;
       document.getElementById("question").textContent = "";
       document.getElementById("choices").innerHTML = "";
       document.getElementById("timer").textContent = "";
@@ -449,6 +503,13 @@
     function toggleMobileMenu() {
       const menu = document.getElementById("mobileMenu");
       menu.classList.toggle("hidden");
+    }
+
+    function toggleSubMenu(id) {
+      const menu = document.getElementById(id);
+      const icon = document.getElementById(id + "Icon");
+      menu.classList.toggle('hidden');
+      if (icon) icon.classList.toggle('rotate-180');
     }
   </script>
 </body>
