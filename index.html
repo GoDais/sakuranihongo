@@ -90,12 +90,18 @@
       <div id="scoreDisplay" class="text-xl sm:text-2xl font-bold text-gray-600 transition-all duration-300 ease-in-out">
         Score: 0
       </div>
+      <div id="mistakeDisplay" class="text-lg sm:text-xl font-semibold text-red-500 mb-2"></div>
       <div id="question" class="text-4xl sm:text-6xl md:text-[100px] font-bold mb-10 text-center text-gray-800 drop-shadow-lg tracking-wide">
         メニューからクイズを選んでね！
       </div>
       <div id="choices" class="flex flex-wrap justify-center gap-4 w-full px-2 sm:px-0"></div>
       <div id="feedback" class="feedback mt-8 text-3xl sm:text-5xl font-extrabold transition-all duration-300 drop-shadow text-center"></div>
       <div id="timer" class="mt-4 text-red-600 text-2xl sm:text-3xl font-bold tracking-wide">Time Left: --</div>
+      <div id="gameOver" class="hidden absolute inset-0 flex flex-col justify-center items-center bg-gray-900 bg-opacity-80 text-white rounded-lg z-10">
+        <div class="text-3xl sm:text-5xl font-bold mb-4">ゲーム終了！</div>
+        <div id="finalScore" class="text-2xl sm:text-4xl font-semibold mb-6"></div>
+        <button onclick="restartQuiz()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg text-xl transition">もう一度遊ぶ</button>
+      </div>
     </main>
   </div>
 
@@ -105,7 +111,6 @@
   </footer>
 
   <script>
-    // ひらがな・カタカナ・ローマ字一覧
     const quizData = [
       { hira: "あ", kata: "ア", roma: "a" }, { hira: "い", kata: "イ", roma: "i" }, { hira: "う", kata: "ウ", roma: "u" },
       { hira: "え", kata: "エ", roma: "e" }, { hira: "お", kata: "オ", roma: "o" }, { hira: "か", kata: "カ", roma: "ka" },
@@ -127,11 +132,17 @@
 
     let currentQuestion, currentMode, timer, timeLeft = 10;
     let score = 0;
+    let mistakes = 0;
+    let gameActive = false;
 
     function startQuiz(mode) {
       currentMode = mode;
       score = 0;
+      mistakes = 0;
+      gameActive = true;
+      document.getElementById("gameOver").classList.add("hidden");
       updateScore();
+      updateMistakes();
       getRandomQuestion();
     }
 
@@ -143,7 +154,17 @@
       scoreEl.classList.add("score-animate");
     }
 
+    function updateMistakes() {
+      const mistakeEl = document.getElementById("mistakeDisplay");
+      if (!gameActive) {
+        mistakeEl.textContent = "";
+      } else {
+        mistakeEl.textContent = `ミス（タイムオーバー含む）: ${mistakes} / 5`;
+      }
+    }
+
     function getRandomQuestion() {
+      if (!gameActive) return;
       clearInterval(timer);
       timeLeft = 10;
       updateTimer();
@@ -164,7 +185,6 @@
         questionText = currentQuestion.roma;
         correctAnswer = currentQuestion.kata;
       } else {
-        // fallback
         questionText = "メニューからクイズを選んでね！";
         correctAnswer = "";
       }
@@ -174,7 +194,6 @@
       feedback.textContent = "";
       feedback.classList.remove("correct", "incorrect");
 
-      // 選択肢作成
       const choices = new Set();
       choices.add(correctAnswer);
       while (choices.size < 4) {
@@ -203,9 +222,7 @@
         updateTimer();
         if (timeLeft <= 0) {
           clearInterval(timer);
-          feedback.textContent = "Time Over！";
-          feedback.classList.add("incorrect");
-          setTimeout(getRandomQuestion, 1500);
+          processMistake("Time Over！");
         }
       }, 1000);
     }
@@ -215,6 +232,7 @@
     }
 
     function checkAnswer(selected, correct) {
+      if (!gameActive) return;
       clearInterval(timer);
       const feedback = document.getElementById("feedback");
       feedback.classList.remove("correct", "incorrect");
@@ -225,11 +243,52 @@
         updateScore();
         feedback.textContent = "Correct！";
         feedback.classList.add("correct");
+        setTimeout(() => {
+          if (gameActive) getRandomQuestion();
+        }, 1000);
       } else {
-        feedback.textContent = `Incorrect！Correct Answer is 「${correct}」`;
-        feedback.classList.add("incorrect");
+        processMistake(`Incorrect！Correct Answer is 「${correct}」`);
       }
-      setTimeout(getRandomQuestion, 1500);
+    }
+
+    function processMistake(message) {
+      mistakes++;
+      updateMistakes();
+      const feedback = document.getElementById("feedback");
+      feedback.textContent = message;
+      feedback.classList.remove("correct");
+      feedback.classList.add("incorrect");
+      if (mistakes >= 5) {
+        endGame();
+      } else {
+        setTimeout(() => {
+          if (gameActive) getRandomQuestion();
+        }, 1500);
+      }
+    }
+
+    function endGame() {
+      gameActive = false;
+      clearInterval(timer);
+      document.getElementById("gameOver").classList.remove("hidden");
+      document.getElementById("finalScore").textContent = `あなたのスコアは ${score} 点でした！`;
+      document.getElementById("question").textContent = "";
+      document.getElementById("choices").innerHTML = "";
+      document.getElementById("timer").textContent = "";
+      document.getElementById("feedback").textContent = "";
+      updateMistakes();
+    }
+
+    function restartQuiz() {
+      document.getElementById("gameOver").classList.add("hidden");
+      document.getElementById("scoreDisplay").textContent = "Score: 0";
+      document.getElementById("mistakeDisplay").textContent = "";
+      document.getElementById("question").textContent = "メニューからクイズを選んでね！";
+      document.getElementById("choices").innerHTML = "";
+      document.getElementById("timer").textContent = "Time Left: --";
+      document.getElementById("feedback").textContent = "";
+      // モードを選び直しにしたい場合は何もしない（モード継続なら下行を入れる）
+      // startQuiz(currentMode);
     }
 
     function toggleMobileMenu() {
