@@ -78,10 +78,10 @@
     <nav class="hidden md:block w-52 bg-gray-800 text-white p-4">
       <h2 class="text-lg font-semibold mb-4">Quiz Menu</h2>
       <ul class="space-y-2">
-        <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma')">ひらがな → ローマ字</li>
-        <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira')">ローマ字 → ひらがな</li>
-        <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma')">カタカナ → ローマ字</li>
-        <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata')">ローマ字 → カタカナ</li>
+        <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma')">Hiragana → Roman</li>
+        <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira')">Roman → Hiragana</li>
+        <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma')">Katakana → Roman</li>
+        <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata')">Roman → Katakana</li>
       </ul>
     </nav>
 
@@ -92,15 +92,15 @@
       </div>
       <div id="mistakeDisplay" class="text-lg sm:text-xl font-semibold text-red-500 mb-2"></div>
       <div id="question" class="text-4xl sm:text-6xl md:text-[100px] font-bold mb-10 text-center text-gray-800 drop-shadow-lg tracking-wide">
-        メニューからクイズを選んでね！
+        Choose Quiz from Menu！
       </div>
       <div id="choices" class="flex flex-wrap justify-center gap-4 w-full px-2 sm:px-0"></div>
       <div id="feedback" class="feedback mt-8 text-3xl sm:text-5xl font-extrabold transition-all duration-300 drop-shadow text-center"></div>
       <div id="timer" class="mt-4 text-red-600 text-2xl sm:text-3xl font-bold tracking-wide">Time Left: --</div>
       <div id="gameOver" class="hidden absolute inset-0 flex flex-col justify-center items-center bg-gray-900 bg-opacity-80 text-white rounded-lg z-10">
-        <div class="text-3xl sm:text-5xl font-bold mb-4">ゲーム終了！</div>
+        <div class="text-3xl sm:text-5xl font-bold mb-4">Game Over！</div>
         <div id="finalScore" class="text-2xl sm:text-4xl font-semibold mb-6"></div>
-        <button onclick="restartQuiz()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg text-xl transition">もう一度遊ぶ</button>
+        <button onclick="restartQuiz()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg text-xl transition">Try Again</button>
       </div>
     </main>
   </div>
@@ -159,7 +159,7 @@
       if (!gameActive) {
         mistakeEl.textContent = "";
       } else {
-        mistakeEl.textContent = `ミス（タイムオーバー含む）: ${mistakes} / 5`;
+        mistakeEl.textContent = `Miss : ${mistakes} / 5`;
       }
     }
 
@@ -185,7 +185,7 @@
         questionText = currentQuestion.roma;
         correctAnswer = currentQuestion.kata;
       } else {
-        questionText = "メニューからクイズを選んでね！";
+        questionText = "Choose Quiz from Menu！";
         correctAnswer = "";
       }
 
@@ -247,7 +247,7 @@
           if (gameActive) getRandomQuestion();
         }, 1000);
       } else {
-        processMistake(`Incorrect！Correct Answer is 「${correct}」`);
+        processMistake(`Miss！Correct Answer is 「${correct}」`);
       }
     }
 
@@ -271,7 +271,7 @@
       gameActive = false;
       clearInterval(timer);
       document.getElementById("gameOver").classList.remove("hidden");
-      document.getElementById("finalScore").textContent = `あなたのスコアは ${score} 点でした！`;
+      document.getElementById("finalScore").textContent = `Youre Scoer is ${score} ！`;
       document.getElementById("question").textContent = "";
       document.getElementById("choices").innerHTML = "";
       document.getElementById("timer").textContent = "";
@@ -283,7 +283,7 @@
       document.getElementById("gameOver").classList.add("hidden");
       document.getElementById("scoreDisplay").textContent = "Score: 0";
       document.getElementById("mistakeDisplay").textContent = "";
-      document.getElementById("question").textContent = "メニューからクイズを選んでね！";
+      document.getElementById("question").textContent = "Choose Quiz from Menu！";
       document.getElementById("choices").innerHTML = "";
       document.getElementById("timer").textContent = "Time Left: --";
       document.getElementById("feedback").textContent = "";
