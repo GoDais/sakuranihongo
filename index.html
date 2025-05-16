@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ひらがな⇔ローマ字クイズ</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -61,10 +61,27 @@
     <div class="text-sm opacity-80 hidden md:block">Powered by Tailwind CSS</div>
   </header>
 
+  <!-- ハンバーガーメニュー -->
+  <div class="md:hidden flex justify-between items-center bg-gray-800 text-white px-4 py-3">
+    <span class="font-bold text-lg">メニュー</span>
+    <button onclick="toggleMobileMenu()" aria-label="メニューを開く">
+      <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
+        <path d="M2.5 6h15M2.5 10h15M2.5 14h15"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- モバイルメニュー -->
+  <nav id="mobileMenu" class="md:hidden bg-gray-700 text-white px-4 py-2 hidden transition-all duration-300">
+    <ul class="space-y-2">
+      <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma'); toggleMobileMenu();">ひらがな → ローマ字</li>
+      <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira'); toggleMobileMenu();">ローマ字 → ひらがな</li>
+    </ul>
+  </nav>
+
   <!-- メイン -->
   <div class="flex flex-1 flex-col md:flex-row">
-    
-    <!-- サイドメニュー -->
+    <!-- PC用ナビ -->
     <nav class="hidden md:block w-52 bg-gray-800 text-white p-4">
       <h2 class="text-lg font-semibold mb-4">クイズ選択</h2>
       <ul class="space-y-2">
@@ -73,23 +90,17 @@
       </ul>
     </nav>
 
-    <!-- メインコンテンツ -->
+    <!-- クイズ画面 -->
     <main class="flex-1 p-4 sm:p-6 flex flex-col items-center justify-center relative">
-      <div id="scoreDisplay"
-           class="text-xl sm:text-2xl font-bold text-gray-600 transition-all duration-300 ease-in-out">
+      <div id="scoreDisplay" class="text-xl sm:text-2xl font-bold text-gray-600 transition-all duration-300 ease-in-out">
         スコア: 0
       </div>
-      <div id="question"
-           class="text-4xl sm:text-6xl md:text-[100px] font-bold mb-10 text-center text-gray-800 drop-shadow-lg tracking-wide">
+      <div id="question" class="text-4xl sm:text-6xl md:text-[100px] font-bold mb-10 text-center text-gray-800 drop-shadow-lg tracking-wide">
         クイズを選んでね！
       </div>
       <div id="choices" class="flex flex-wrap justify-center gap-4 w-full px-2 sm:px-0"></div>
-      <div id="feedback"
-           class="feedback mt-8 text-3xl sm:text-5xl font-extrabold transition-all duration-300 drop-shadow text-center">
-      </div>
-      <div id="timer" class="mt-4 text-red-600 text-2xl sm:text-3xl font-bold tracking-wide">
-        Timer: --
-      </div>
+      <div id="feedback" class="feedback mt-8 text-3xl sm:text-5xl font-extrabold transition-all duration-300 drop-shadow text-center"></div>
+      <div id="timer" class="mt-4 text-red-600 text-2xl sm:text-3xl font-bold tracking-wide">Timer: --</div>
     </main>
   </div>
 
@@ -203,7 +214,11 @@
 
       setTimeout(getRandomQuestion, 1500);
     }
-  </script>
 
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.classList.toggle("hidden");
+    }
+  </script>
 </body>
 </html>
