@@ -3,19 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ひらがな⇔ローマ字クイズ</title>
+  <title>ひらがな・カタカナ⇔ローマ字クイズ</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     @keyframes pop {
       0%   { transform: scale(1); opacity: 0; }
       30%  { transform: scale(1.5); opacity: 1; }
       100% { transform: scale(1); opacity: 1; }
     }
-
     @keyframes shake {
       0% { transform: translateX(0); }
       25% { transform: translateX(-10px); }
@@ -23,23 +19,19 @@
       75% { transform: translateX(-10px); }
       100% { transform: translateX(0); }
     }
-
     @keyframes scorePop {
       0%   { transform: scale(1); }
       50%  { transform: scale(1.5); }
       100% { transform: scale(1); }
     }
-
     .feedback.correct {
       color: #22c55e;
       animation: pop 0.4s ease;
     }
-
     .feedback.incorrect {
       color: #ef4444;
       animation: shake 0.4s ease;
     }
-
     .score-animate {
       animation: scorePop 0.4s ease;
     }
@@ -61,25 +53,26 @@
     <div class="text-sm opacity-80 hidden md:block">Powered by Tailwind CSS</div>
   </header>
 
- <!-- ハンバーガーメニュー（スマホ専用） -->
-<div class="md:hidden flex justify-between items-center bg-gray-800 text-white px-4 py-3">
-  <span class="font-bold text-lg">Quiz Menu</span>
-  <button onclick="toggleMobileMenu()" aria-label="メニューを開く">
-    <svg class="w-6 h-6" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
-</div>
+  <!-- ハンバーガーメニュー（スマホ専用） -->
+  <div class="md:hidden flex justify-between items-center bg-gray-800 text-white px-4 py-3">
+    <span class="font-bold text-lg">Quiz Menu</span>
+    <button onclick="toggleMobileMenu()" aria-label="メニューを開く">
+      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
 
   <!-- モバイルメニュー -->
   <nav id="mobileMenu" class="md:hidden bg-gray-700 text-white px-4 py-2 hidden transition-all duration-300">
     <ul class="space-y-2">
       <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma'); toggleMobileMenu();">ひらがな → ローマ字</li>
       <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira'); toggleMobileMenu();">ローマ字 → ひらがな</li>
+      <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma'); toggleMobileMenu();">カタカナ → ローマ字</li>
+      <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata'); toggleMobileMenu();">ローマ字 → カタカナ</li>
     </ul>
   </nav>
 
-  <!-- メイン -->
   <div class="flex flex-1 flex-col md:flex-row">
     <!-- PC用ナビ -->
     <nav class="hidden md:block w-52 bg-gray-800 text-white p-4">
@@ -87,6 +80,8 @@
       <ul class="space-y-2">
         <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma')">ひらがな → ローマ字</li>
         <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira')">ローマ字 → ひらがな</li>
+        <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma')">カタカナ → ローマ字</li>
+        <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata')">ローマ字 → カタカナ</li>
       </ul>
     </nav>
 
@@ -96,38 +91,38 @@
         Score: 0
       </div>
       <div id="question" class="text-4xl sm:text-6xl md:text-[100px] font-bold mb-10 text-center text-gray-800 drop-shadow-lg tracking-wide">
-        Choose quiz from menu！
+        メニューからクイズを選んでね！
       </div>
       <div id="choices" class="flex flex-wrap justify-center gap-4 w-full px-2 sm:px-0"></div>
       <div id="feedback" class="feedback mt-8 text-3xl sm:text-5xl font-extrabold transition-all duration-300 drop-shadow text-center"></div>
-      <div id="timer" class="mt-4 text-red-600 text-2xl sm:text-3xl font-bold tracking-wide">Timer: --</div>
+      <div id="timer" class="mt-4 text-red-600 text-2xl sm:text-3xl font-bold tracking-wide">Time Left: --</div>
     </main>
   </div>
 
   <!-- フッター -->
   <footer class="bg-gray-200 text-center text-sm p-4 text-gray-600">
-    © 2025 Hiragana Quiz App - 制作：Sakura Nihongo
+    © 2025 Hiragana/Katakana Quiz App - 制作：Sakura Nihongo
   </footer>
 
-  <!-- スクリプト -->
   <script>
+    // ひらがな・カタカナ・ローマ字一覧
     const quizData = [
-      { hira: "あ", roma: "a" }, { hira: "い", roma: "i" }, { hira: "う", roma: "u" },
-      { hira: "え", roma: "e" }, { hira: "お", roma: "o" }, { hira: "か", roma: "ka" },
-      { hira: "き", roma: "ki" }, { hira: "く", roma: "ku" }, { hira: "け", roma: "ke" },
-      { hira: "こ", roma: "ko" }, { hira: "さ", roma: "sa" }, { hira: "し", roma: "shi" },
-      { hira: "す", roma: "su" }, { hira: "せ", roma: "se" }, { hira: "そ", roma: "so" },
-      { hira: "た", roma: "ta" }, { hira: "ち", roma: "chi" }, { hira: "つ", roma: "tsu" },
-      { hira: "て", roma: "te" }, { hira: "と", roma: "to" }, { hira: "な", roma: "na" },
-      { hira: "に", roma: "ni" }, { hira: "ぬ", roma: "nu" }, { hira: "ね", roma: "ne" },
-      { hira: "の", roma: "no" }, { hira: "は", roma: "ha" }, { hira: "ひ", roma: "hi" },
-      { hira: "ふ", roma: "fu" }, { hira: "へ", roma: "he" }, { hira: "ほ", roma: "ho" },
-      { hira: "ま", roma: "ma" }, { hira: "み", roma: "mi" }, { hira: "む", roma: "mu" },
-      { hira: "め", roma: "me" }, { hira: "も", roma: "mo" }, { hira: "や", roma: "ya" },
-      { hira: "ゆ", roma: "yu" }, { hira: "よ", roma: "yo" }, { hira: "ら", roma: "ra" },
-      { hira: "り", roma: "ri" }, { hira: "る", roma: "ru" }, { hira: "れ", roma: "re" },
-      { hira: "ろ", roma: "ro" }, { hira: "わ", roma: "wa" }, { hira: "を", roma: "wo" },
-      { hira: "ん", roma: "n" }
+      { hira: "あ", kata: "ア", roma: "a" }, { hira: "い", kata: "イ", roma: "i" }, { hira: "う", kata: "ウ", roma: "u" },
+      { hira: "え", kata: "エ", roma: "e" }, { hira: "お", kata: "オ", roma: "o" }, { hira: "か", kata: "カ", roma: "ka" },
+      { hira: "き", kata: "キ", roma: "ki" }, { hira: "く", kata: "ク", roma: "ku" }, { hira: "け", kata: "ケ", roma: "ke" },
+      { hira: "こ", kata: "コ", roma: "ko" }, { hira: "さ", kata: "サ", roma: "sa" }, { hira: "し", kata: "シ", roma: "shi" },
+      { hira: "す", kata: "ス", roma: "su" }, { hira: "せ", kata: "セ", roma: "se" }, { hira: "そ", kata: "ソ", roma: "so" },
+      { hira: "た", kata: "タ", roma: "ta" }, { hira: "ち", kata: "チ", roma: "chi" }, { hira: "つ", kata: "ツ", roma: "tsu" },
+      { hira: "て", kata: "テ", roma: "te" }, { hira: "と", kata: "ト", roma: "to" }, { hira: "な", kata: "ナ", roma: "na" },
+      { hira: "に", kata: "ニ", roma: "ni" }, { hira: "ぬ", kata: "ヌ", roma: "nu" }, { hira: "ね", kata: "ネ", roma: "ne" },
+      { hira: "の", kata: "ノ", roma: "no" }, { hira: "は", kata: "ハ", roma: "ha" }, { hira: "ひ", kata: "ヒ", roma: "hi" },
+      { hira: "ふ", kata: "フ", roma: "fu" }, { hira: "へ", kata: "ヘ", roma: "he" }, { hira: "ほ", kata: "ホ", roma: "ho" },
+      { hira: "ま", kata: "マ", roma: "ma" }, { hira: "み", kata: "ミ", roma: "mi" }, { hira: "む", kata: "ム", roma: "mu" },
+      { hira: "め", kata: "メ", roma: "me" }, { hira: "も", kata: "モ", roma: "mo" }, { hira: "や", kata: "ヤ", roma: "ya" },
+      { hira: "ゆ", kata: "ユ", roma: "yu" }, { hira: "よ", kata: "ヨ", roma: "yo" }, { hira: "ら", kata: "ラ", roma: "ra" },
+      { hira: "り", kata: "リ", roma: "ri" }, { hira: "る", kata: "ル", roma: "ru" }, { hira: "れ", kata: "レ", roma: "re" },
+      { hira: "ろ", kata: "ロ", roma: "ro" }, { hira: "わ", kata: "ワ", roma: "wa" }, { hira: "を", kata: "ヲ", roma: "wo" },
+      { hira: "ん", kata: "ン", roma: "n" }
     ];
 
     let currentQuestion, currentMode, timer, timeLeft = 10;
@@ -154,19 +149,42 @@
       updateTimer();
 
       currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
-      const correctAnswer = currentMode === 'hiraToRoma' ? currentQuestion.roma : currentQuestion.hira;
-      const questionText = currentMode === 'hiraToRoma' ? currentQuestion.hira : currentQuestion.roma;
+      let questionText, correctAnswer;
+
+      if (currentMode === 'hiraToRoma') {
+        questionText = currentQuestion.hira;
+        correctAnswer = currentQuestion.roma;
+      } else if (currentMode === 'romaToHira') {
+        questionText = currentQuestion.roma;
+        correctAnswer = currentQuestion.hira;
+      } else if (currentMode === 'kataToRoma') {
+        questionText = currentQuestion.kata;
+        correctAnswer = currentQuestion.roma;
+      } else if (currentMode === 'romaToKata') {
+        questionText = currentQuestion.roma;
+        correctAnswer = currentQuestion.kata;
+      } else {
+        // fallback
+        questionText = "メニューからクイズを選んでね！";
+        correctAnswer = "";
+      }
 
       document.getElementById("question").textContent = questionText;
       const feedback = document.getElementById("feedback");
       feedback.textContent = "";
       feedback.classList.remove("correct", "incorrect");
 
+      // 選択肢作成
       const choices = new Set();
       choices.add(correctAnswer);
       while (choices.size < 4) {
         const rand = quizData[Math.floor(Math.random() * quizData.length)];
-        choices.add(currentMode === 'hiraToRoma' ? rand.roma : rand.hira);
+        if (currentMode === 'hiraToRoma' || currentMode === 'kataToRoma')
+          choices.add(rand.roma);
+        else if (currentMode === 'romaToHira')
+          choices.add(rand.hira);
+        else if (currentMode === 'romaToKata')
+          choices.add(rand.kata);
       }
 
       const shuffled = Array.from(choices).sort(() => Math.random() - 0.5);
@@ -211,7 +229,6 @@
         feedback.textContent = `Incorrect！Correct Answer is 「${correct}」`;
         feedback.classList.add("incorrect");
       }
-
       setTimeout(getRandomQuestion, 1500);
     }
 
