@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>ひらがな⇔ローマ字クイズ</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background-color: #c786b3;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    footer {
+      background-color: #eee;
+      color: #555;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9em;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    nav {
+      width: 200px;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+    }
+
+    nav h2 {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+
+    nav li {
+      list-style: none;
+      margin: 10px 0;
+      cursor: pointer;
+      color: #aaf;
+    }
+
+    nav li:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    #scoreDisplay {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    .question {
+      font-size: 5em;
+      margin-bottom: 40px;
+    }
+
+    .choices button {
+      font-size: 1.5em;
+      margin: 10px;
+      padding: 10px 25px;
+      cursor: pointer;
+    }
+
+  .feedback {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .feedback.correct {
+    color: #22c55e; /* Tailwindのgreen-500相当 */
+    animation: pop 0.4s ease;
+  }
+
+  .feedback.incorrect {
+    color: #ef4444; /* Tailwindのred-500相当 */
+    animation: shake 0.4s ease;
+  }
+
+  @keyframes pop {
+    0%   { transform: scale(1); opacity: 0; }
+    30%  { transform: scale(1.5); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+  }
+  @keyframes scorePop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+.score-animate {
+  animation: scorePop 0.4s ease;
+}
+
+  </style>
+</head>
+<body class="flex flex-col min-h-screen font-sans bg-gray-50">
+  <!-- ヘッダー -->
+<header class="bg-cover bg-center text-white p-6 flex items-center justify-between"
+        style="background-image: url('23114880_l.jpg');">
+    <div class="flex items-center space-x-4">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Japanese_Hiragana_ky.svg/512px-Japanese_Hiragana_ky.svg.png"
+           alt="ロゴ" class="w-12 h-12 rounded-full shadow-lg bg-white">
+      <div>
+        <h1 class="text-2xl font-bold drop-shadow">さくらにほんご　日本語のお勉強</h1>
+        <p class="text-sm opacity-90">遊びながら日本語を覚えよう！</p>
+      </div>
+    </div>
+    <div class="text-sm opacity-80 hidden md:block">Powered by Tailwind CSS</div>
+  </header>
+
+  <!-- メインコンテンツエリア -->
+  <div class="flex flex-1">
+    <!-- サイドメニュー -->
+    <nav class="w-52 bg-gray-800 text-white p-4">
+      <h2 class="text-lg font-semibold mb-4">クイズ選択</h2>
+      <ul class="space-y-2">
+        <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma')">ひらがな → ローマ字</li>
+        <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira')">ローマ字 → ひらがな</li>
+      </ul>
+    </nav>
+
+    <!-- クイズメイン画面 -->
+    <main class="flex-1 p-6 flex flex-col items-center justify-center relative">
+<div id="scoreDisplay"
+     class="text-2xl font-bold text-gray-600 transition-all duration-300 ease-in-out">
+  Your Score: 0
+</div>
+<div id="question" 
+     class="text-[100px] font-bold mb-10 text-center text-gray-800 drop-shadow-lg tracking-wide">
+  クイズを選んでね！
+</div>
+      <div id="choices" class="flex flex-wrap justify-center gap-4"></div>
+<div id="feedback" 
+     class="feedback mt-8 text-5xl font-extrabold transition-all duration-300 drop-shadow text-center">
+</div>
+<div id="timer" class="mt-4 text-red-600 text-3xl font-bold tracking-wide">
+  Timer: --
+</div>
+    </main>
+  </div>
+
+  <!-- フッター -->
+  <footer class="bg-gray-200 text-center text-sm p-4 text-gray-600">
+    © 2025 Hiragana Quiz App - 制作：Sakura Nihongo
+  </footer>
+
+  <script>
+    const quizData = [
+        { hira: "あ", roma: "a" },   { hira: "い", roma: "i" },   { hira: "う", roma: "u" },
+        { hira: "え", roma: "e" },   { hira: "お", roma: "o" },
+
+        { hira: "か", roma: "ka" },  { hira: "き", roma: "ki" },  { hira: "く", roma: "ku" },
+        { hira: "け", roma: "ke" },  { hira: "こ", roma: "ko" },
+
+        { hira: "さ", roma: "sa" },  { hira: "し", roma: "shi" }, { hira: "す", roma: "su" },
+        { hira: "せ", roma: "se" },  { hira: "そ", roma: "so" },
+
+        { hira: "た", roma: "ta" },  { hira: "ち", roma: "chi" }, { hira: "つ", roma: "tsu" },
+        { hira: "て", roma: "te" },  { hira: "と", roma: "to" },
+
+        { hira: "な", roma: "na" },  { hira: "に", roma: "ni" },  { hira: "ぬ", roma: "nu" },
+        { hira: "ね", roma: "ne" },  { hira: "の", roma: "no" },
+
+        { hira: "は", roma: "ha" },  { hira: "ひ", roma: "hi" },  { hira: "ふ", roma: "fu" },
+        { hira: "へ", roma: "he" },  { hira: "ほ", roma: "ho" },
+
+        { hira: "ま", roma: "ma" },  { hira: "み", roma: "mi" },  { hira: "む", roma: "mu" },
+        { hira: "め", roma: "me" },  { hira: "も", roma: "mo" },
+
+        { hira: "や", roma: "ya" },                     { hira: "ゆ", roma: "yu" },  
+        { hira: "よ", roma: "yo" },
+
+        { hira: "ら", roma: "ra" },  { hira: "り", roma: "ri" },  { hira: "る", roma: "ru" },
+        { hira: "れ", roma: "re" },  { hira: "ろ", roma: "ro" },
+
+        { hira: "わ", roma: "wa" },  { hira: "を", roma: "wo" },
+
+        { hira: "ん", roma: "n" }
+    ];
+
+    let currentQuestion, currentMode, timer, timeLeft = 10;
+    let score = 0;
+
+
+    function startQuiz(mode) {
+      currentMode = mode;
+      score = 0;
+      updateScore();
+      getRandomQuestion();
+    }
+
+function updateScore() {
+  const scoreEl = document.getElementById("scoreDisplay");
+  scoreEl.textContent = `スコア: ${score}`;
+  
+  // アニメーションクラスの再適用（トリガー用）
+  scoreEl.classList.remove("score-animate");
+  void scoreEl.offsetWidth; // 再描画トリガー
+  scoreEl.classList.add("score-animate");
+}
+
+    function getRandomQuestion() {
+      clearInterval(timer);
+      timeLeft = 10;
+      updateTimer();
+
+      currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
+      const correctAnswer = currentMode === 'hiraToRoma' ? currentQuestion.roma : currentQuestion.hira;
+      const questionText = currentMode === 'hiraToRoma' ? currentQuestion.hira : currentQuestion.roma;
+
+      document.getElementById("question").textContent = questionText;
+      const feedback = document.getElementById("feedback");
+      feedback.textContent = "";
+      feedback.classList.remove("correct", "incorrect");
+
+      const choices = new Set();
+      choices.add(correctAnswer);
+      while (choices.size < 4) {
+        const rand = quizData[Math.floor(Math.random() * quizData.length)];
+        choices.add(currentMode === 'hiraToRoma' ? rand.roma : rand.hira);
+      }
+
+const shuffled = Array.from(choices).sort(() => Math.random() - 0.5);
+const choicesContainer = document.getElementById("choices");
+choicesContainer.innerHTML = "";
+shuffled.forEach(choice => {
+  const btn = document.createElement("button");
+  btn.textContent = choice;
+  btn.className = "text-3xl px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md transition duration-300";
+  btn.onclick = () => checkAnswer(choice, correctAnswer);
+  choicesContainer.appendChild(btn);
+});
+
+      timer = setInterval(() => {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          feedback.textContent = "Time Over！";
+          feedback.classList.add("incorrect");
+          setTimeout(getRandomQuestion, 1500);
+        }
+      }, 1000);
+    }
+
+    function updateTimer() {
+      document.getElementById("timer").textContent = `Time Left: ${timeLeft}`;
+    }
+
+    function checkAnswer(selected, correct) {
+      clearInterval(timer);
+      const feedback = document.getElementById("feedback");
+      feedback.classList.remove("correct", "incorrect");
+      void feedback.offsetWidth; // アニメーション再適用のための再描画
+
+      if (selected === correct) {
+        score++;
+        updateScore();
+        feedback.textContent = "Correct！";
+        feedback.classList.add("correct");
+      } else {
+        feedback.textContent = `Incorrect！Correct Answer is 「${correct}」`;
+        feedback.classList.add("incorrect");
+      }
+
+      setTimeout(getRandomQuestion, 1500);
+    }
+  </script>
+
+</body>
+</html>
