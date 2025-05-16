@@ -61,15 +61,15 @@
     <div class="text-sm opacity-80 hidden md:block">Powered by Tailwind CSS</div>
   </header>
 
-  <!-- ハンバーガーメニュー -->
-  <div class="md:hidden flex justify-between items-center bg-gray-800 text-white px-4 py-3">
-    <span class="font-bold text-lg">メニュー</span>
-    <button onclick="toggleMobileMenu()" aria-label="メニューを開く">
-      <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
-        <path d="M2.5 6h15M2.5 10h15M2.5 14h15"/>
-      </svg>
-    </button>
-  </div>
+ <!-- ハンバーガーメニュー（スマホ専用） -->
+<div class="md:hidden flex justify-between items-center bg-gray-800 text-white px-4 py-3">
+  <span class="font-bold text-lg">メニュー</span>
+  <button onclick="toggleMobileMenu()" aria-label="メニューを開く">
+    <svg class="w-6 h-6" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
 
   <!-- モバイルメニュー -->
   <nav id="mobileMenu" class="md:hidden bg-gray-700 text-white px-4 py-2 hidden transition-all duration-300">
