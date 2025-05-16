@@ -70,6 +70,8 @@
       <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira'); toggleMobileMenu();">Roman → Hiragana</li>
       <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma'); toggleMobileMenu();">Katakana → Roman</li>
       <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata'); toggleMobileMenu();">Roman → Katakana</li>
+      <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn'); toggleMobileMenu();">Japanese → English</li>
+
     </ul>
   </nav>
 
@@ -82,6 +84,7 @@
         <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira')">Roman → Hiragana</li>
         <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma')">Katakana → Roman</li>
         <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata')">Roman → Katakana</li>
+        <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn')">Japanese → English</li>
       </ul>
     </nav>
 
@@ -130,12 +133,119 @@
       { hira: "ん", kata: "ン", roma: "n" }
     ];
 
+    const vocabQuizData = [
+      { jp: "学生", en: "student", roma: "gakusei" },
+      { jp: "先生", en: "teacher", roma: "sensei" },
+      { jp: "学校", en: "school", roma: "gakkou" },
+      { jp: "友達", en: "friend", roma: "tomodachi" },
+      { jp: "家", en: "house", roma: "ie" },
+      { jp: "父", en: "father", roma: "chichi" },
+      { jp: "母", en: "mother", roma: "haha" },
+      { jp: "兄", en: "older brother", roma: "ani" },
+      { jp: "姉", en: "older sister", roma: "ane" },
+      { jp: "弟", en: "younger brother", roma: "otouto" },
+      { jp: "妹", en: "younger sister", roma: "imouto" },
+      { jp: "犬", en: "dog", roma: "inu" },
+      { jp: "猫", en: "cat", roma: "neko" },
+      { jp: "本", en: "book", roma: "hon" },
+      { jp: "新聞", en: "newspaper", roma: "shinbun" },
+      { jp: "手紙", en: "letter", roma: "tegami" },
+      { jp: "電話", en: "telephone", roma: "denwa" },
+      { jp: "水", en: "water", roma: "mizu" },
+      { jp: "お茶", en: "tea", roma: "ocha" },
+      { jp: "ご飯", en: "rice", roma: "gohan" },
+      { jp: "パン", en: "bread", roma: "pan" },
+      { jp: "卵", en: "egg", roma: "tamago" },
+      { jp: "魚", en: "fish", roma: "sakana" },
+      { jp: "肉", en: "meat", roma: "niku" },
+      { jp: "野菜", en: "vegetable", roma: "yasai" },
+      { jp: "果物", en: "fruit", roma: "kudamono" },
+      { jp: "車", en: "car", roma: "kuruma" },
+      { jp: "自転車", en: "bicycle", roma: "jitensha" },
+      { jp: "電車", en: "train", roma: "densha" },
+      { jp: "駅", en: "station", roma: "eki" },
+      { jp: "道", en: "road", roma: "michi" },
+      { jp: "町", en: "town", roma: "machi" },
+      { jp: "店", en: "shop", roma: "mise" },
+      { jp: "病院", en: "hospital", roma: "byouin" },
+      { jp: "医者", en: "doctor", roma: "isha" },
+      { jp: "会社", en: "company", roma: "kaisha" },
+      { jp: "仕事", en: "work", roma: "shigoto" },
+      { jp: "勉強", en: "study", roma: "benkyou" },
+      { jp: "教室", en: "classroom", roma: "kyoushitsu" },
+      { jp: "窓", en: "window", roma: "mado" },
+      { jp: "机", en: "desk", roma: "tsukue" },
+      { jp: "椅子", en: "chair", roma: "isu" },
+      { jp: "時計", en: "clock", roma: "tokei" },
+      { jp: "ペン", en: "pen", roma: "pen" },
+      { jp: "ノート", en: "notebook", roma: "nooto" },
+      { jp: "紙", en: "paper", roma: "kami" },
+      { jp: "バッグ", en: "bag", roma: "baggu" },
+      { jp: "靴", en: "shoes", roma: "kutsu" },
+      { jp: "服", en: "clothes", roma: "fuku" },
+      { jp: "帽子", en: "hat", roma: "boushi" },
+      { jp: "傘", en: "umbrella", roma: "kasa" },
+      { jp: "財布", en: "wallet", roma: "saifu" },
+      { jp: "鍵", en: "key", roma: "kagi" },
+      { jp: "部屋", en: "room", roma: "heya" },
+      { jp: "トイレ", en: "toilet", roma: "toire" },
+      { jp: "お風呂", en: "bath", roma: "ofuro" },
+      { jp: "台所", en: "kitchen", roma: "daidokoro" },
+      { jp: "ドア", en: "door", roma: "doa" },
+      { jp: "床", en: "floor", roma: "yuka" },
+      { jp: "天井", en: "ceiling", roma: "tenjou" },
+      { jp: "壁", en: "wall", roma: "kabe" },
+      { jp: "電気", en: "electricity", roma: "denki" },
+      { jp: "パソコン", en: "computer", roma: "pasokon" },
+      { jp: "テレビ", en: "television", roma: "terebi" },
+      { jp: "ラジオ", en: "radio", roma: "rajio" },
+      { jp: "カメラ", en: "camera", roma: "kamera" },
+      { jp: "映画", en: "movie", roma: "eiga" },
+      { jp: "音楽", en: "music", roma: "ongaku" },
+      { jp: "歌", en: "song", roma: "uta" },
+      { jp: "絵", en: "picture", roma: "e" },
+      { jp: "写真", en: "photo", roma: "shashin" },
+      { jp: "本棚", en: "bookshelf", roma: "hondana" },
+      { jp: "箱", en: "box", roma: "hako" },
+      { jp: "冷蔵庫", en: "refrigerator", roma: "reizouko" },
+      { jp: "電子レンジ", en: "microwave", roma: "denshi renji" },
+      { jp: "扇風機", en: "fan", roma: "senpuuki" },
+      { jp: "エアコン", en: "air conditioner", roma: "eakon" },
+      { jp: "ベッド", en: "bed", roma: "beddo" },
+      { jp: "枕", en: "pillow", roma: "makura" },
+      { jp: "毛布", en: "blanket", roma: "moufu" },
+      { jp: "郵便局", en: "post office", roma: "yuubinkyoku" },
+      { jp: "銀行", en: "bank", roma: "ginkou" },
+      { jp: "公園", en: "park", roma: "kouen" },
+      { jp: "図書館", en: "library", roma: "toshokan" },
+      { jp: "スーパー", en: "supermarket", roma: "suupaa" },
+      { jp: "レストラン", en: "restaurant", roma: "resutoran" },
+      { jp: "バス", en: "bus", roma: "basu" },
+      { jp: "飛行機", en: "airplane", roma: "hikouki" },
+      { jp: "船", en: "ship", roma: "fune" },
+      { jp: "信号", en: "traffic light", roma: "shingou" },
+      { jp: "橋", en: "bridge", roma: "hashi" },
+      { jp: "交差点", en: "crossroad", roma: "kousaten" }
+    ];
+
     let currentQuestion, currentMode, timer, timeLeft = 10;
     let score = 0;
     let mistakes = 0;
     let gameActive = false;
 
     function startQuiz(mode) {
+      if (mode === 'jpToEn') {
+        currentMode = 'jpToEn';
+        score = 0;
+        mistakes = 0;
+        gameActive = true;
+        document.getElementById("gameOver").classList.add("hidden");
+        updateScore();
+        updateMistakes();
+        getRandomQuestion();
+        return;
+      }
+
       currentMode = mode;
       score = 0;
       mistakes = 0;
@@ -171,6 +281,51 @@
 
       currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
       let questionText, correctAnswer;
+
+      if (currentMode === 'jpToEn') {
+        currentQuestion = vocabQuizData[Math.floor(Math.random() * vocabQuizData.length)];
+        questionText = currentQuestion.jp;
+        correctAnswer = currentQuestion.en;
+
+        // 選択肢セット生成
+        const choices = new Set();
+        choices.add(correctAnswer);
+        while (choices.size < 4) {
+          const rand = vocabQuizData[Math.floor(Math.random() * vocabQuizData.length)];
+          choices.add(rand.en);
+        }
+        const shuffled = Array.from(choices).sort(() => Math.random() - 0.5);
+
+        // UI更新
+        document.getElementById("question").textContent = questionText;
+        const feedback = document.getElementById("feedback");
+        feedback.textContent = "";
+        feedback.classList.remove("correct", "incorrect");
+
+        const choicesContainer = document.getElementById("choices");
+        choicesContainer.innerHTML = "";
+        shuffled.forEach(choice => {
+          const btn = document.createElement("button");
+          btn.textContent = choice;
+          btn.className = "text-xl sm:text-2xl md:text-3xl px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md transition duration-300 w-full sm:w-auto";
+          btn.onclick = () => checkAnswer(choice, correctAnswer);
+          choicesContainer.appendChild(btn);
+        });
+
+        clearInterval(timer);
+        timeLeft = 10;
+        updateTimer();
+        timer = setInterval(() => {
+          timeLeft--;
+          updateTimer();
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            processMistake("Time Over！");
+          }
+        }, 1000);
+
+        return;
+      }
 
       if (currentMode === 'hiraToRoma') {
         questionText = currentQuestion.hira;
