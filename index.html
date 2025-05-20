@@ -18,8 +18,8 @@
     <div class="flex items-center space-x-4">
 
       <div>
-        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold drop-shadow">さくらにほんご　日本語のお勉強</h1>
-        <p class="text-sm sm:text-base opacity-90">遊びながら日本語を覚えよう！</p>
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold drop-shadow text-pink-400">さくらにほんご　日本語のお勉強</h1>
+        <p class="text-sm sm:text-base opacity-90 text-pink-400">遊びながら日本語を覚えよう！</p>
       </div>
     </div>
     <div class="text-sm opacity-80 hidden md:block">Powered by Tailwind CSS</div>
@@ -27,7 +27,7 @@
 
   <!-- ハンバーガーメニュー（スマホ専用） -->
   <div class="md:hidden flex justify-between items-center bg-gray-800 text-white px-4 py-3">
-    <span class="font-bold text-lg">Quiz Menu</span>
+    <span class="font-bold text-lg">Menu</span>
     <button onclick="toggleMobileMenu()" aria-label="メニューを開く">
       <svg class="w-6 h-6" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -38,22 +38,43 @@
   <!-- モバイルメニュー -->
   <nav id="mobileMenu" class="md:hidden bg-gray-700 text-white px-4 py-2 hidden transition-all duration-300">
     <ul class="space-y-2">
-      <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma'); toggleMobileMenu();">Hiragana → Roman</li>
-      <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira'); toggleMobileMenu();">Roman → Hiragana</li>
-      <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma'); toggleMobileMenu();">Katakana → Roman</li>
-      <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata'); toggleMobileMenu();">Roman → Katakana</li>
-      <!-- 難易度別ツリー -->
+      <!-- Character Quiz -->
       <li>
-        <div onclick="toggleSubMenu('jpToEnMenuMobile')" class="flex items-center cursor-pointer font-semibold">
-          Japanese → English
-          <svg id="jpToEnMenuMobileIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div onclick="toggleSubMenu('characterQuizMenuMobile')" class="flex items-center cursor-pointer font-semibold">
+          Character Quiz
+          <svg id="characterQuizMenuMobileIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
         </div>
-        <ul id="jpToEnMenuMobile" class="ml-4 mt-1 space-y-1 hidden">
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-easy'); toggleMobileMenu();">初級（Easy）</li>
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-medium'); toggleMobileMenu();">中級（Medium）</li>
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-hard'); toggleMobileMenu();">上級（Hard）</li>
+        <ul id="characterQuizMenuMobile" class="ml-4 mt-1 space-y-1 hidden">
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma'); toggleMobileMenu();">Hiragana → Romaji</li>
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira'); toggleMobileMenu();">Romaji → Hiragana</li>
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma'); toggleMobileMenu();">Katakana → Romaji</li>
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata'); toggleMobileMenu();">Romaji → Katakana</li>
+        </ul>
+      </li>
+      <!-- Vocabulary Quiz -->
+      <li>
+        <div onclick="toggleSubMenu('vocabQuizMenuMobile')" class="flex items-center cursor-pointer font-semibold">
+          Vocabulary Quiz
+          <svg id="vocabQuizMenuMobileIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        <ul id="vocabQuizMenuMobile" class="ml-4 mt-1 space-y-1 hidden">
+          <li>
+            <div onclick="toggleSubMenu('jpToEnMenuMobile')" class="flex items-center cursor-pointer">
+              Japanese → English
+              <svg id="jpToEnMenuMobileIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <ul id="jpToEnMenuMobile" class="ml-4 mt-1 space-y-1 hidden">
+              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-easy'); toggleMobileMenu();">初級（Easy）</li>
+              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-medium'); toggleMobileMenu();">中級（Medium）</li>
+              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-hard'); toggleMobileMenu();">上級（Hard）</li>
+            </ul>
+          </li>
         </ul>
       </li>
     </ul>
@@ -61,28 +82,50 @@
 
   <div class="flex flex-1 flex-col md:flex-row">
     <!-- PC用ナビ -->
-    <nav class="hidden md:block w-64 bg-gray-800 text-white p-4">
-      <h2 class="text-lg font-semibold mb-4">Quiz Menu</h2>
-      <ul class="space-y-2">
-        <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma')">Hiragana → Roman</li>
-        <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira')">Roman → Hiragana</li>
-        <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma')">Katakana → Roman</li>
-        <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata')">Roman → Katakana</li>
-        <li>
-          <div onclick="toggleSubMenu('jpToEnMenu')" class="cursor-pointer font-semibold flex items-center">
-            Japanese → English
-            <svg id="jpToEnMenuIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-          <ul id="jpToEnMenu" class="ml-4 mt-1 space-y-1 hidden">
-            <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-easy')">初級（Easy）</li>
-            <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-medium')">中級（Medium）</li>
-            <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-hard')">上級（Hard）</li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
+  <nav class="hidden md:block w-64 bg-gray-800 text-white p-4">
+    <h2 class="text-lg font-semibold mb-4">Menu</h2>
+    <ul class="space-y-2">
+      <!-- Character Quiz -->
+      <li>
+        <div onclick="toggleSubMenu('characterQuizMenu')" class="cursor-pointer font-semibold flex items-center">
+          Character Quiz
+          <svg id="characterQuizMenuIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        <ul id="characterQuizMenu" class="ml-4 mt-1 space-y-1 hidden">
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma')">Hiragana → Romaji</li>
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira')">Romaji → Hiragana</li>
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma')">Katakana → Romaji</li>
+          <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata')">Romaji → Katakana</li>
+        </ul>
+      </li>
+      <!-- Vocabulary Quiz -->
+      <li>
+        <div onclick="toggleSubMenu('vocabQuizMenu')" class="cursor-pointer font-semibold flex items-center">
+          Vocabulary Quiz
+          <svg id="vocabQuizMenuIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        <ul id="vocabQuizMenu" class="ml-4 mt-1 space-y-1 hidden">
+          <li>
+            <div onclick="toggleSubMenu('jpToEnMenu')" class="cursor-pointer flex items-center">
+              Japanese → English
+              <svg id="jpToEnMenuIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <ul id="jpToEnMenu" class="ml-4 mt-1 space-y-1 hidden">
+              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-easy')">初級（Easy）</li>
+              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-medium')">中級（Medium）</li>
+              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-hard')">上級（Hard）</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 
     <!-- クイズ画面 -->
     <main class="flex-1 p-4 sm:p-6 flex flex-col items-center justify-center relative">
