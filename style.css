@@ -1,0 +1,32 @@
+* { box-sizing: border-box; }
+@keyframes pop {
+  0%   { transform: scale(1); opacity: 0; }
+  30%  { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+@keyframes scorePop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+.feedback.correct {
+  color: #22c55e;
+  animation: pop 0.4s ease;
+}
+.feedback.incorrect {
+  color: #ef4444;
+  animation: shake 0.4s ease;
+}
+.score-animate {
+  animation: scorePop 0.4s ease;
+}
+.rotate-180 {
+  transform: rotate(180deg);
+}
