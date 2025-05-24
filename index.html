@@ -3,161 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>さくらにほんご クイズ（難易度別）</title>
+  <title>さくらにほんご | 日本語クイズ＆読み物サイト</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6635200937478061"
-     crossorigin="anonymous"></script>
-
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="flex flex-col min-h-screen font-sans bg-gray-50">
 
-  <!-- ヘッダー -->
+  <!-- ヘッダー＆ナビ -->
   <header class="bg-cover bg-center text-white p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4"
           style="background-image: url('23114880_l.jpg');">
-    <div class="flex items-center space-x-4">
-
-      <div>
-        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold drop-shadow text-pink-400">さくらにほんご　日本語のお勉強</h1>
-        <p class="text-sm sm:text-base opacity-90 text-pink-400">遊びながら日本語を覚えよう！</p>
-      </div>
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold drop-shadow text-pink-400">さくらにほんご</h1>
+      <p class="text-sm sm:text-base opacity-90 text-pink-400">遊びながら日本語を覚えよう！</p>
     </div>
-    <div class="text-sm opacity-80 hidden md:block">Powered by Tailwind CSS</div>
+    <nav class="mt-2 md:mt-0 flex gap-4">
+      <a href="index.html" class="hover:underline font-bold">ホーム</a>
+      <a href="quiz.html" class="hover:underline font-bold">クイズ</a>
+      <a href="articles/index.html" class="hover:underline font-bold">読み物・記事</a>
+    </nav>
   </header>
 
-  <!-- ハンバーガーメニュー（スマホ専用） -->
-  <div class="md:hidden flex justify-between items-center bg-gray-800 text-white px-4 py-3">
-    <span class="font-bold text-lg">Menu</span>
-    <button onclick="toggleMobileMenu()" aria-label="メニューを開く">
-      <svg class="w-6 h-6" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </div>
+  <!-- メイン -->
+  <main class="flex-1 w-full flex flex-col items-center justify-center px-4 py-8">
+    <!-- メインビジュアル＆キャッチ -->
+    <img src="23114880_l.jpg" alt="さくらイメージ" class="rounded-xl shadow-lg w-64 mb-6">
+    <h2 class="text-3xl md:text-4xl font-extrabold text-pink-600 mb-4">日本語学習を、もっと楽しく。</h2>
+    <p class="text-lg md:text-xl mb-6 text-gray-700 max-w-xl text-center">
+      さくらにほんごは、「クイズ」と「読み物」で日本語を楽しく学べるWebアプリです。<br>
+      初心者から上級者まで、気軽にチャレンジ！
+    </p>
+    <div class="flex flex-col sm:flex-row gap-6 mb-10">
+      <a href="quiz.html"
+        class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-10 rounded-2xl shadow-xl text-2xl transition">
+        ▶ クイズで学ぶ
+      </a>
+      <a href="articles/index.html"
+        class="bg-white hover:bg-pink-50 border border-pink-300 text-pink-500 font-bold py-4 px-10 rounded-2xl shadow-xl text-2xl transition">
+        ▶ 記事を読む
+      </a>
+    </div>
 
-  <!-- モバイルメニュー -->
-  <nav id="mobileMenu" class="md:hidden bg-gray-700 text-white px-4 py-2 hidden transition-all duration-300">
-    <ul class="space-y-2">
-      <!-- Character Quiz -->
-      <li>
-        <div onclick="toggleSubMenu('characterQuizMenuMobile')" class="flex items-center cursor-pointer font-semibold">
-          Character Quiz
-          <svg id="characterQuizMenuMobileIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
-        <ul id="characterQuizMenuMobile" class="ml-4 mt-1 space-y-1 hidden">
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma'); toggleMobileMenu();">Hiragana → Romaji</li>
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira'); toggleMobileMenu();">Romaji → Hiragana</li>
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma'); toggleMobileMenu();">Katakana → Romaji</li>
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata'); toggleMobileMenu();">Romaji → Katakana</li>
-        </ul>
-      </li>
-      <!-- Vocabulary Quiz -->
-      <li>
-        <div onclick="toggleSubMenu('vocabQuizMenuMobile')" class="flex items-center cursor-pointer font-semibold">
-          Vocabulary Quiz
-          <svg id="vocabQuizMenuMobileIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
-        <ul id="vocabQuizMenuMobile" class="ml-4 mt-1 space-y-1 hidden">
-          <li>
-            <div onclick="toggleSubMenu('jpToEnMenuMobile')" class="flex items-center cursor-pointer">
-              Japanese → English
-              <svg id="jpToEnMenuMobileIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-            <ul id="jpToEnMenuMobile" class="ml-4 mt-1 space-y-1 hidden">
-              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-easy'); toggleMobileMenu();">初級（Easy）</li>
-              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-medium'); toggleMobileMenu();">中級（Medium）</li>
-              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-hard'); toggleMobileMenu();">上級（Hard）</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
+    <!-- 新着読み物・記事 -->
+    <section class="w-full max-w-4xl mx-auto">
+      <h3 class="text-2xl font-semibold mb-4 text-pink-500 text-center">新着読み物・記事</h3>
+      <div class="flex flex-col md:flex-row gap-6 justify-center">
+        <!-- 記事サンプル：実際はリンク先と内容を入れ替えてください -->
+        <a href="articles/001.html" class="block bg-white rounded-xl shadow p-4 max-w-xs hover:shadow-lg transition">
+          <div class="font-bold text-lg mb-2">ひらがなの歴史</div>
+          <p class="text-sm text-gray-600 mb-1">日本語のひらがなはどこから来たの？</p>
+          <span class="text-xs text-gray-400">2025/05/01</span>
+        </a>
+        <a href="articles/002.html" class="block bg-white rounded-xl shadow p-4 max-w-xs hover:shadow-lg transition">
+          <div class="font-bold text-lg mb-2">日本の食文化</div>
+          <p class="text-sm text-gray-600 mb-1">和食の奥深さに迫る記事です。</p>
+          <span class="text-xs text-gray-400">2025/04/28</span>
+        </a>
+        <a href="articles/003.html" class="block bg-white rounded-xl shadow p-4 max-w-xs hover:shadow-lg transition">
+          <div class="font-bold text-lg mb-2">敬語を使いこなそう</div>
+          <p class="text-sm text-gray-600 mb-1">ビジネスにも役立つ日本語表現。</p>
+          <span class="text-xs text-gray-400">2025/04/15</span>
+        </a>
+      </div>
+      <div class="text-center mt-4">
+        <a href="articles/index.html" class="text-pink-500 font-bold hover:underline">→ もっと記事を見る</a>
+      </div>
+    </section>
 
-  <div class="flex flex-1 flex-col md:flex-row">
-    <!-- PC用ナビ -->
-  <nav class="hidden md:block w-64 bg-gray-800 text-white p-4">
-    <h2 class="text-lg font-semibold mb-4">Menu</h2>
-    <ul class="space-y-2">
-      <!-- Character Quiz -->
-      <li>
-        <div onclick="toggleSubMenu('characterQuizMenu')" class="cursor-pointer font-semibold flex items-center">
-          Character Quiz
-          <svg id="characterQuizMenuIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
-        <ul id="characterQuizMenu" class="ml-4 mt-1 space-y-1 hidden">
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('hiraToRoma')">Hiragana → Romaji</li>
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToHira')">Romaji → Hiragana</li>
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('kataToRoma')">Katakana → Romaji</li>
-          <li class="hover:underline cursor-pointer" onclick="startQuiz('romaToKata')">Romaji → Katakana</li>
-        </ul>
-      </li>
-      <!-- Vocabulary Quiz -->
-      <li>
-        <div onclick="toggleSubMenu('vocabQuizMenu')" class="cursor-pointer font-semibold flex items-center">
-          Vocabulary Quiz
-          <svg id="vocabQuizMenuIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
-        <ul id="vocabQuizMenu" class="ml-4 mt-1 space-y-1 hidden">
-          <li>
-            <div onclick="toggleSubMenu('jpToEnMenu')" class="cursor-pointer flex items-center">
-              Japanese → English
-              <svg id="jpToEnMenuIcon" class="ml-1 w-4 h-4 inline transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-            <ul id="jpToEnMenu" class="ml-4 mt-1 space-y-1 hidden">
-              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-easy')">初級（Easy）</li>
-              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-medium')">中級（Medium）</li>
-              <li class="hover:underline cursor-pointer" onclick="startQuiz('jpToEn-hard')">上級（Hard）</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-
-    <!-- クイズ画面 -->
-    <main class="flex-1 p-4 sm:p-6 flex flex-col items-center justify-center relative">
-      <div id="scoreDisplay" class="text-xl sm:text-2xl font-bold text-gray-600 transition-all duration-300 ease-in-out">
-        Score: 0
-      </div>
-      <div id="mistakeDisplay" class="text-lg sm:text-xl font-semibold text-red-500 mb-2"></div>
-      <div id="question" class="text-4xl sm:text-6xl md:text-[60px] font-bold mb-10 text-center text-gray-800 drop-shadow-lg tracking-wide">
-        Choose Quiz from Menu！
-      </div>
-      <div id="choices" class="flex flex-wrap justify-center gap-4 w-full px-2 sm:px-0"></div>
-      <div id="feedback" class="feedback mt-8 text-3xl sm:text-5xl font-extrabold transition-all duration-300 drop-shadow text-center"></div>
-      <div id="timer" class="mt-4 text-red-600 text-2xl sm:text-3xl font-bold tracking-wide">Time Left: --</div>
-      <div id="gameOver" class="hidden absolute inset-0 flex flex-col justify-center items-center bg-gray-900 bg-opacity-80 text-white rounded-lg z-10">
-        <div class="text-3xl sm:text-5xl font-bold mb-4">Game Over！</div>
-        <div id="finalScore" class="text-2xl sm:text-4xl font-semibold mb-6"></div>
-        <button onclick="restartQuiz()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg text-xl transition">Try Again</button>
-      </div>
-    </main>
-  </div>
+    <!-- サービスの特徴 -->
+    <section class="bg-white rounded-xl shadow-lg p-6 mt-12 w-full max-w-2xl mx-auto">
+      <h3 class="text-2xl font-semibold mb-4 text-pink-500">このアプリの特徴</h3>
+      <ul class="text-left space-y-3 text-gray-800 text-lg">
+        <li>🌸 <b>簡単スタート</b>：登録不要、無料ですぐに遊べる！</li>
+        <li>🌸 <b>難易度別で安心</b>：初心者から上級者まで</li>
+        <li>🌸 <b>スマホ/PC対応</b>：いつでもどこでも学べる</li>
+        <li>🌸 <b>読み物も充実</b>：日本語の知識を深める記事も随時更新！</li>
+      </ul>
+    </section>
+  </main>
 
   <!-- フッター -->
-<footer class="bg-gray-200 text-center text-sm p-4 text-gray-600">
-  © 2025 Sakura Nihongo. All rights reserved.<br>
-  This app uses Japanese vocabulary lists based on open data (MIT/CC0/Public Domain) and original content.<br>
-  Free for educational and personal use. Please check individual dataset licenses for commercial use.<br>
-  本アプリの日本語単語リストはオープンデータ（MIT/CC0/Public Domain）や自作データをもとにしています。<br>
-  教育・個人利用はご自由にお使いください。商用利用の際は各データセットのライセンスもご確認ください。
-</footer>
-
-  <!-- 外部JSの読み込み（bodyの一番最後！） -->
-  <script src="main.js"></script>
-
+  <footer class="bg-gray-200 text-center text-sm p-4 text-gray-600">
+    © 2025 Sakura Nihongo. All rights reserved.<br>
+    本アプリの日本語単語リストはオープンデータ（MIT/CC0/Public Domain）や自作データをもとにしています。
+  </footer>
 </body>
 </html>
