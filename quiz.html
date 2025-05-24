@@ -147,14 +147,13 @@
 </footer>
 
   <!-- 外部JSの読み込み（bodyの一番最後！） -->
-     <script>
-    // シンプルなfetchで読み込み
-    fetch('header.html')
-        .then(res => res.text())
-        .then(data => {
-        document.getElementById('header').innerHTML = data;
-        });
-  </script>
+ <script>
+  fetch('header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header').innerHTML = data;
+    });
+</script>
   <script src="main.js"></script>
 
 
