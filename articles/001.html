@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ひらがなの歴史 | さくらにほんご 読み物</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body class="flex flex-col min-h-screen font-sans bg-gray-50">
+  <!-- ヘッダー＆ナビ -->
+<div id="header"></div>
+
+  <!-- 記事本文 -->
+  <main class="flex-1 w-full max-w-2xl mx-auto px-4 py-10">
+    <h2 class="text-3xl font-bold text-pink-500 mb-2">ひらがなの歴史</h2>
+    <div class="mb-4 text-gray-400 text-xs">2025/05/01</div>
+    <article class="prose prose-lg max-w-none text-gray-800 bg-white rounded-xl p-6 shadow">
+      <p>
+        ひらがなは、日本語の表記に使われる最も基本的な文字の一つです。<br>
+        その起源は平安時代にさかのぼります。もともとは漢字を崩して作られた「草書体」が、やがてひらがなとして定着しました。
+      </p>
+      <h3>ひらがなの誕生</h3>
+      <p>
+        ひらがなは、主に女性の間で使われ始めました。平安時代の女性作家、紫式部や清少納言の作品にもひらがなが多く使われています。<br>
+        当時、男性は公式な文書には漢字や漢文を用いましたが、ひらがなは日常的な表現や和歌、手紙に使われました。
+      </p>
+      <h3>現代のひらがな</h3>
+      <p>
+        現代では、ひらがなは日本語の文法構造を支える大切な役割を担っています。助詞や送り仮名、子供向けの本など、様々な場面で使われています。
+      </p>
+      <p>
+        ひらがなを覚えることで、日本語の読み書きがぐっと楽になります。ぜひ毎日少しずつ覚えていきましょう！
+      </p>
+    </article>
+    <div class="mt-8 flex flex-wrap gap-4">
+      <a href="index.html" class="bg-pink-100 hover:bg-pink-200 text-pink-600 px-4 py-2 rounded-lg font-bold shadow">記事一覧に戻る</a>
+      <a href="../quiz.html" class="bg-blue-100 hover:bg-blue-200 text-blue-600 px-4 py-2 rounded-lg font-bold shadow">クイズで遊ぶ</a>
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="bg-gray-200 text-center text-sm p-4 text-gray-600 mt-8">
+    © 2025 Sakura Nihongo. All rights reserved.
+  </footer>
+
+    <script>
+    // シンプルなfetchで読み込み
+    fetch('../header.html')
+        .then(res => res.text())
+        .then(data => {
+        document.getElementById('header').innerHTML = data;
+        });
+    </script>
+
+</body>
+</html>
