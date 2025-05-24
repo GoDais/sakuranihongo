@@ -9,18 +9,7 @@
 </head>
 <body class="flex flex-col min-h-screen font-sans bg-gray-50">
   <!-- ヘッダー＆ナビ -->
-  <header class="bg-cover bg-center text-white p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4"
-    style="background-image: url('../23114880_l.jpg');">
-    <div>
-      <h1 class="text-2xl md:text-3xl font-bold drop-shadow text-pink-400">さくらにほんご</h1>
-      <p class="text-sm sm:text-base opacity-90 text-pink-400">読み物・記事一覧</p>
-    </div>
-    <nav class="mt-2 md:mt-0 flex gap-4">
-      <a href="../index.html" class="hover:underline font-bold">ホーム</a>
-      <a href="../quiz.html" class="hover:underline font-bold">クイズ</a>
-      <a href="index.html" class="hover:underline font-bold">読み物・記事</a>
-    </nav>
-  </header>
+    <div id="header"></div>
 
   <!-- 記事一覧 -->
   <main class="flex-1 w-full max-w-3xl mx-auto px-4 py-10">
@@ -49,5 +38,13 @@
   <footer class="bg-gray-200 text-center text-sm p-4 text-gray-600 mt-8">
     © 2025 Sakura Nihongo. All rights reserved.
   </footer>
+    <script>
+        // シンプルなfetchで読み込み
+        fetch('header.html')
+            .then(res => res.text())
+            .then(data => {
+            document.getElementById('header').innerHTML = data;
+            });
+    </script>
 </body>
 </html>
