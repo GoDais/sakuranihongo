@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Surprising World of Japanese Ambiguity｜さくらにほんご</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body class="flex flex-col min-h-screen font-sans bg-gray-50">
+  <!-- ヘッダー＆ナビ -->
+<div id="header"></div>
+
+  <!-- 記事本文 -->
+<main class="flex-1 w-full max-w-2xl mx-auto px-4 py-10">
+  <h2 class="text-3xl md:text-4xl font-extrabold text-pink-500 mb-2 flex items-center gap-2">
+    <span class="text-2xl">🌸</span> 外国人が驚く「曖昧表現」の世界 / The Surprising World of Japanese Ambiguity
+  </h2>
+  <div class="mb-6 flex items-center gap-2">
+    <span class="bg-pink-100 text-pink-500 rounded-full px-3 py-1 text-xs font-semibold shadow-sm">2025/05/31</span>
+  </div>
+  <article class="prose prose-pink prose-lg max-w-none bg-white/80 rounded-2xl p-8 shadow-xl border border-pink-100">
+
+    <h3 class="!text-pink-500 !font-bold">はじめに / Introduction</h3>
+    <br>
+    <p>
+      日本語には、あいまいな表現がとても多いことをご存じですか？<br>
+      はっきり言わずに、相手に伝わるように言葉を選ぶ文化が、日本では根強く残っています。
+    </p>
+    <p class="text-gray-600">
+      Did you know that Japanese has many ambiguous expressions?<br>
+      There is a strong cultural tradition in Japan of choosing words that do not state things directly, letting the listener "read between the lines."
+    </p>
+    <br><br>
+
+    <h3 class="!text-pink-500 !font-bold">「ちょっと難しいですね」ってどういう意味？ / What Does "Chotto Muzukashii Desu Ne" Really Mean?</h3>
+    <br>
+    <p>
+      例えば、「ちょっと難しいですね」と言われたとき、どう思いますか？<br>
+      直訳すると「少し難しい」という意味ですが、日本人は実は「できません」「NOです」という気持ちで使うことがよくあります。
+    </p>
+    <p class="text-gray-600">
+      For example, how would you interpret "chotto muzukashii desu ne"?<br>
+      Literally, it means "It’s a bit difficult," but Japanese people often use it to mean "I can’t do it" or "No."
+    </p>
+    <br><br>
+
+    <h3 class="!text-pink-500 !font-bold">他にもある！曖昧な断り方 / More Examples of Ambiguous Refusals</h3>
+    <br>
+    <p>
+      他にも「検討します」「前向きに考えます」など、一見ポジティブな言い方も、実は遠回しな断りの意味で使われることがあります。
+    </p>
+    <p class="text-gray-600">
+      There are also expressions like "kentou shimasu" (I will consider it) and "maemuki ni kangaemasu" (I will think about it positively). These may sound positive, but are often indirect ways of saying "no."
+    </p>
+    <br><br>
+
+    <h3 class="!text-pink-500 !font-bold">なぜ曖昧な表現が多いの？ / Why Is Ambiguity So Common?</h3>
+    <br>
+    <p>
+      日本では、相手の気持ちを傷つけないために、直接的な表現を避けることが多いです。<br>
+      あいまいな言い方は、やさしさや配慮の表れでもあります。
+    </p>
+    <p class="text-gray-600">
+      In Japan, people often avoid direct language to prevent hurting others' feelings.<br>
+      Ambiguous expressions are seen as a sign of kindness and consideration.
+    </p>
+    <br><br>
+
+    <h3 class="!text-pink-500 !font-bold">まとめ / Conclusion</h3>
+    <br>
+    <p>
+      日本語を学ぶときは、言葉そのものだけでなく、背後にある「空気」や「気持ち」を感じ取ることが大切です。<br>
+      曖昧表現を理解すれば、より自然なコミュニケーションができるようになります。
+    </p>
+    <p class="text-gray-600">
+      When learning Japanese, it’s important to sense the feelings and context behind the words, not just the literal meaning.<br>
+      Understanding ambiguous expressions will help you communicate more naturally in Japanese.
+    </p>
+  </article>
+  <div class="mt-10 flex flex-wrap gap-4">
+    <a href="index.html" class="bg-pink-100 hover:bg-pink-200 text-pink-700 px-6 py-3 rounded-xl font-bold shadow transition">記事一覧に戻る / Return to Article List</a>
+    <a href="../quiz.html" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-6 py-3 rounded-xl font-bold shadow transition">クイズで遊ぶ / Play Games</a>
+  </div>
+</main>
+
+  <!-- フッター -->
+  <footer class="bg-gray-200 text-center text-sm p-4 text-gray-600 mt-8">
+    © 2025 Sakura Nihongo. All rights reserved.
+  </footer>
+
+    <script>
+    // シンプルなfetchで読み込み
+    fetch('header.html')
+        .then(res => res.text())
+        .then(data => {
+        document.getElementById('header').innerHTML = data;
+        });
+    </script>
+
+</body>
+</html>
