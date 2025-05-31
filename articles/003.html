@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>「はい」はYesじゃない？｜さくらにほんご</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body class="flex flex-col min-h-screen font-sans bg-gray-50">
+  <!-- ヘッダー＆ナビ -->
+<div id="header"></div>
+
+  <!-- 記事本文 -->
+<main class="max-w-3xl mx-auto px-4 py-10">
+    <h1 class="text-4xl font-bold text-pink-600 mb-4">「はい」はYesじゃない！？<br><span class="text-xl text-gray-600">Does "Hai" Always Mean Yes?</span></h1>
+    <p class="text-sm text-gray-500 mb-6">2025/05/31｜さくらにほんご</p>
+
+    <article class="bg-white shadow-md rounded-xl p-6 space-y-8">
+      
+      <section>
+        <h2 class="text-2xl font-semibold text-pink-500 mb-2">はじめに / Introduction</h2>
+        <p>
+          日本語を学んでいると、「はい」は英語の“Yes”と同じ意味だと思いがちです。
+          しかし、実は日本語の「はい」にはもっと幅広い使い方があります。
+        </p>
+        <p class="text-gray-600">
+          Many people learning Japanese believe that “hai” always means “yes,” just like in English.
+          However, in Japanese, “hai” has a much wider range of meanings and uses.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-pink-500 mb-2">「はい」は同意だけじゃない / "Hai" Isn’t Just Agreement</h2>
+        <p>
+          日本語で「はい」と言っても、必ずしも賛成や同意を意味するとは限りません。
+          「聞いています」「理解しました」という返事としてもよく使われます。
+        </p>
+        <p class="text-gray-600">
+          Saying “hai” in Japanese does not always mean agreement or approval.
+          It’s often used to mean “I’m listening” or “I understand.”
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-pink-500 mb-2">会話例 / Conversation Example</h2>
+        <div class="bg-gray-100 p-4 rounded-md">
+          <p><strong>上司：</strong>「明日までにこの書類を提出してください。」</p>
+          <p><strong>部下：</strong>「はい。」</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-md text-gray-600 mt-2">
+          <p><strong>Boss:</strong> “Please submit this document by tomorrow.”</p>
+          <p><strong>Employee:</strong> “Hai.”</p>
+        </div>
+        <p class="mt-2">
+          この「はい」は「了解しました」「聞こえました」という意味で、必ずしも“yes, I want to do it”や“yes, I agree”ではありません。
+        </p>
+        <p class="text-gray-600">
+          Here, “hai” means “I understand” or “I heard you,” not necessarily “yes, I want to do it” or “yes, I agree.”
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-pink-500 mb-2">「はい」で本当は反対？ / “Hai” Can Even Hide Disagreement?</h2>
+        <p>
+          時には、内心では反対しているのに、とりあえず「はい」と返事をすることもあります。
+          日本の職場や学校では、相手の話をまず受け止めるために「はい」と言う文化があります。
+        </p>
+        <p class="text-gray-600">
+          Sometimes, people say “hai” even when they actually disagree.
+          In Japanese workplaces or schools, it’s common to say “hai” first just to show you’re listening and accepting the information.
+        </p>
+        <div class="bg-gray-100 p-4 rounded-md mt-2">
+          <p><strong>先生：</strong>「宿題をもっと増やします。」</p>
+          <p><strong>生徒：</strong>「はい…」</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-md text-gray-600 mt-2">
+          <p><strong>Teacher:</strong> “I will give you more homework.”</p>
+          <p><strong>Student:</strong> “Hai…”</p>
+        </div>
+        <p class="mt-2">
+          実はうれしくないけど、「はい」と返事することもよくあります。
+        </p>
+        <p class="text-gray-600">
+          Even when they’re not happy, Japanese people often reply with “hai.”
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-pink-500 mb-2">まとめ / Conclusion</h2>
+        <p>
+          「はい」は日本語独特の表現で、必ずしも“Yes”とイコールではありません。
+          文脈や表情、声のトーンによって意味が大きく変わります。
+        </p>
+        <p class="text-gray-600">
+          “Hai” is a uniquely Japanese expression. It doesn’t always mean “yes.”
+          Its meaning can change a lot depending on the situation, facial expressions, or tone of voice.
+        </p>
+        <p>
+          日本語を使うときは、単語の意味だけでなく、その背景やニュアンスにも注目してみましょう。
+        </p>
+        <p class="text-gray-600">
+          When you use Japanese, try to pay attention not only to the words, but also to the background and nuance.
+        </p>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- フッター -->
+  <footer class="bg-gray-200 text-center text-sm p-4 text-gray-600 mt-8">
+    © 2025 Sakura Nihongo. All rights reserved.
+  </footer>
+
+    <script>
+    // シンプルなfetchで読み込み
+    fetch('header.html')
+        .then(res => res.text())
+        .then(data => {
+        document.getElementById('header').innerHTML = data;
+        });
+    </script>
+
+</body>
+</html>
