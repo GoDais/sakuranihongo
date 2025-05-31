@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>運営者情報 / About | Sakura Nihongo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+  <div id="header"></div>
+  <main class="max-w-2xl mx-auto bg-white p-8 my-8 rounded-xl shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-pink-600">運営者情報 / About</h1>
+    
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-2 text-pink-500">サイトについて / About This Site</h2>
+      <p class="mb-4">
+        さくらにほんご（Sakura Nihongo）は、日本語学習者のためのクイズや記事を提供するウェブサイトです。<br>
+        Sakura Nihongo is a website that provides quizzes and articles for Japanese learners.
+      </p>
+    </section>
+    
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-2 text-pink-500">運営者 / Administrator</h2>
+      <p class="mb-2">
+        運営者：加藤 大介（Daisuke Kato）<br>
+        Email: <a href="mailto:sample@example.com" class="text-blue-500 underline">sample@example.com</a>
+      </p>
+      <p>
+        お問い合わせはメールまたは<a href="/contact.html" class="text-blue-500 underline">お問い合わせページ</a>よりお願いいたします。<br>
+        Please contact me by email or through the <a href="/contact.html" class="text-blue-500 underline">Contact page</a>.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-2 text-pink-500">プロフィール / Profile</h2>
+      <p class="mb-4">
+        ITエンジニアとして10年以上の経験があり、日本語教育にも関心を持っています。<br>
+        趣味はプログラミング、語学学習、旅行です。<br>
+        I have over 10 years of experience as an IT engineer and am also interested in Japanese language education.<br>
+        My hobbies are programming, language learning, and traveling.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-2 text-pink-500">著作権 / Copyright</h2>
+      <p>
+        本サイトのコンテンツ（文章・画像・クイズなど）は、特に記載がない限り運営者に帰属します。<br>
+        引用・転載の際は出典を明記してください。<br>
+        All content on this site (texts, images, quizzes, etc.) is owned by the administrator unless otherwise noted.<br>
+        Please credit the source if you quote or reproduce content.
+      </p>
+    </section>
+  </main>
+  
+  <footer class="bg-gray-200 text-center text-sm p-4 text-gray-600">
+    <nav class="mb-2">
+        <a href="/privacy.html" class="mx-2 hover:underline">
+        プライバシーポリシー / Privacy Policy
+        </a>
+        |
+        <a href="/about.html" class="mx-2 hover:underline">
+        運営者情報 / About
+        </a>
+        |
+        <a href="/contact.html" class="mx-2 hover:underline">
+        お問い合わせ / Contact
+        </a>
+    </nav>
+    © 2025 Sakura Nihongo. All rights reserved.<br>
+    本アプリの日本語単語リストはオープンデータ（MIT/CC0/Public Domain）や自作データをもとにしています。<br>
+    Japanese vocabulary lists in this app are based on open data (MIT/CC0/Public Domain) and original data.
+  </footer>
+  <script>
+    fetch('header.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('header').innerHTML = data;
+      });
+  </script>
+</body>
+</html>
