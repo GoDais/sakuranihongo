@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <title>プライバシーポリシー / Privacy Policy | Sakura Nihongo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.tailwindcss.com" rel="stylesheet">
 </head>
 <body class="bg-gray-50 font-sans">
+  <div id="header"></div>
   <main class="max-w-2xl mx-auto bg-white p-8 my-8 rounded-xl shadow-md">
     <h1 class="text-2xl font-bold mb-6 text-pink-600">プライバシーポリシー / Privacy Policy</h1>
     
@@ -59,5 +61,31 @@
       If you have any questions about this privacy policy, please contact us via the <a href="/contact.html" class="text-blue-500 underline">Contact page</a>.
     </p>
   </main>
+  
+    <footer class="bg-gray-200 text-center text-sm p-4 text-gray-600">
+    <nav class="mb-2">
+        <a href="/privacy.html" class="mx-2 hover:underline">
+        プライバシーポリシー / Privacy Policy
+        </a>
+        |
+        <a href="/about.html" class="mx-2 hover:underline">
+        運営者情報 / About
+        </a>
+        |
+        <a href="/contact.html" class="mx-2 hover:underline">
+        お問い合わせ / Contact
+        </a>
+    </nav>
+    © 2025 Sakura Nihongo. All rights reserved.<br>
+    本アプリの日本語単語リストはオープンデータ（MIT/CC0/Public Domain）や自作データをもとにしています。<br>
+    Japanese vocabulary lists in this app are based on open data (MIT/CC0/Public Domain) and original data.
+    </footer>
+    <script>
+  fetch('header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header').innerHTML = data;
+    });
+    </script>
 </body>
 </html>
