@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://sakuranihongo.jp/sitemap.xml
