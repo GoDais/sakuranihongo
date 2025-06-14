@@ -45,12 +45,12 @@
 </head>
 <body class="bg-blue-50 text-gray-800 p-6">
   <div class="max-w-xl mx-auto bg-white p-6 rounded shadow text-center">
-    <h1 class="text-2xl font-bold mb-4">助詞クイズバトル！</h1>
+    <h1 class="text-2xl font-bold mb-4">Beat the monster！</h1>
 
     <!-- 敵キャラとHP -->
     <div class="mb-4">
-      <img id="enemyImg" src="/img/slime_normal.png" alt="スライム" class="w-70 h-70 mx-auto mb-2 transition-all duration-300">
-      <p class="text-lg font-semibold">敵のHP: <span id="enemyHp">30</span></p>
+      <img id="enemyImg" src="/img/slime_normal.png" alt="スライム" class="w-50 h-50 mx-auto mb-2 transition-all duration-300">
+      <p class="text-lg font-semibold">Enemy's Hit Point: <span id="enemyHp">100</span></p>
       <div class="w-full bg-gray-200 h-4 rounded">
         <div id="enemyHpBar" class="bg-red-500 h-4 rounded" style="width: 100%;"></div>
       </div>
@@ -58,7 +58,7 @@
 
     <!-- クイズ問題 -->
     <div class="mb-6">
-      <p id="question" class="text-lg font-bold mb-2">（読み込み中...）</p>
+      <p id="question" class="text-2xl font-bold mb-2">（読み込み中...）</p>
       <div id="choices" class="space-y-2"></div>
     </div>
 
@@ -104,7 +104,7 @@
         ];
 
     let current = 0;
-    let enemyHp = 30;
+    let enemyHp =100;
 
     const enemyImg = document.getElementById("enemyImg");
     const questionEl = document.getElementById("question");
@@ -133,19 +133,19 @@
     function checkAnswer(choice) {
       const q = questions[current];
       if (choice === q.answer) {
-        showAnimatedMessage("正解！攻撃！", "text-green-800");
+        showAnimatedMessage("Correct！Attack！", "text-green-800");
         enemyImg.src = "/img/slime_hurt.png";
         enemyImg.classList.add("shake");
 
         setTimeout(() => {
-          enemyHp -= 10;
+          enemyHp -= 30;
           if (enemyHp < 0) enemyHp = 0;
           enemyHpEl.textContent = enemyHp;
           enemyHpBar.style.width = `${enemyHp}%`;
 
           if (enemyHp === 0) {
             enemyImg.src = "/img/slime_defeated.png";
-            showAnimatedMessage("敵を倒した！おめでとう！🎉", "text-purple-800");
+            showAnimatedMessage("You beat it！Congrats！🎉", "text-purple-800");
           } else {
             enemyImg.src = "/img/slime_normal.png";
             enemyImg.classList.remove("shake");
@@ -153,7 +153,7 @@
           }
         }, 500);
       } else {
-        showAnimatedMessage("不正解…もう一度挑戦！", "text-red-800");
+        showAnimatedMessage("Worng…Try Again！", "text-red-800");
         setTimeout(() => {
           nextQuestion();
         }, 1000);
