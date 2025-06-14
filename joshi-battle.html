@@ -50,7 +50,7 @@
     <!-- 敵キャラとHP -->
     <div class="mb-4">
       <img id="enemyImg" src="/img/slime_normal.png" alt="スライム" class="w-70 h-70 mx-auto mb-2 transition-all duration-300">
-      <p class="text-lg font-semibold">敵のHP: <span id="enemyHp">100</span></p>
+      <p class="text-lg font-semibold">敵のHP: <span id="enemyHp">30</span></p>
       <div class="w-full bg-gray-200 h-4 rounded">
         <div id="enemyHpBar" class="bg-red-500 h-4 rounded" style="width: 100%;"></div>
       </div>
@@ -104,7 +104,7 @@
         ];
 
     let current = 0;
-    let enemyHp = 100;
+    let enemyHp = 30;
 
     const enemyImg = document.getElementById("enemyImg");
     const questionEl = document.getElementById("question");
