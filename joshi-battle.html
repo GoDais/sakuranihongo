@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>助詞クイズバトル</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 text-gray-800 p-6">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded shadow text-center">
+    <h1 class="text-2xl font-bold mb-4">助詞クイズバトル！</h1>
+
+    <!-- 敵キャラとHP -->
+    <div class="mb-4">
+      <img id="enemyImg" src="/img/slime_normal.png" alt="スライム" class="w-40 h-40 mx-auto mb-2 transition-all duration-300">
+      <p class="text-lg font-semibold">敵のHP: <span id="enemyHp">100</span></p>
+      <div class="w-full bg-gray-200 h-4 rounded">
+        <div id="enemyHpBar" class="bg-red-500 h-4 rounded" style="width: 100%;"></div>
+      </div>
+    </div>
+
+    <!-- パワーと攻撃ボタン -->
+    <div class="mb-4">
+      <p class="text-lg font-semibold">あなたのパワー: <span id="power">0</span></p>
+      <button id="attackBtn" class="bg-red-600 text-white px-4 py-2 mt-2 rounded disabled:opacity-50" disabled>攻撃！</button>
+    </div>
+
+    <!-- クイズ問題 -->
+    <div class="mb-6">
+      <p id="question" class="text-lg font-bold mb-2">（読み込み中...）</p>
+      <div id="choices" class="space-y-2"></div>
+    </div>
+
+    <p id="message" class="text-green-600 font-semibold mt-4"></p>
+  </div>
+
+  <script>
+    const questions = [
+      { text: "私は日本語___勉強しています。", choices: ["を", "が", "は"], answer: "を" },
+      { text: "彼___サッカーが上手です。", choices: ["が", "は", "を"], answer: "は" },
+      { text: "田中さん___来ましたか？", choices: ["は", "が", "を"], answer: "が" },
+    ];
+
+    let current = 0;
+    let power = 0;
+    let enemyHp = 100;
+
+    const enemyImg = document.getElementById("enemyImg");
+    const questionEl = document.getElementById("question");
+    const choicesEl = document.getElementById("choices");
+    const powerEl = document.getElementById("power");
+    const enemyHpEl = document.getElementById("enemyHp");
+    const enemyHpBar = document.getElementById("enemyHpBar");
+    const attackBtn = document.getElementById("attackBtn");
+    const messageEl = document.getElementById("message");
+
+    function loadQuestion() {
+      const q = questions[current];
+      questionEl.textContent = q.text;
+      choicesEl.innerHTML = "";
+      q.choices.forEach(choice => {
+        const btn = document.createElement("button");
+        btn.textContent = choice;
+        btn.className = "bg-blue-500 text-white px-4 py-2 rounded mr-2";
+        btn.onclick = () => checkAnswer(choice);
+        choicesEl.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(choice) {
+      const q = questions[current];
+      if (choice === q.answer) {
+        messageEl.textContent = "正解！パワー +10";
+        power += 10;
+        powerEl.textContent = power;
+        if (power >= 30) attackBtn.disabled = false;
+      } else {
+        messageEl.textContent = "不正解…もう一度挑戦！";
+      }
+
+      current = (current + 1) % questions.length;
+      setTimeout(() => {
+        messageEl.textContent = "";
+        loadQuestion();
+      }, 1000);
+    }
+
+    attackBtn.onclick = () => {
+      if (power >= 30 && enemyHp > 0) {
+        power -= 30;
+        powerEl.textContent = power;
+        if (power < 30) attackBtn.disabled = true;
+
+        // ダメージ演出
+        enemyImg.src = "/img/slime_hurt.png";
+
+        setTimeout(() => {
+          enemyHp -= 30;
+          if (enemyHp < 0) enemyHp = 0;
+          enemyHpEl.textContent = enemyHp;
+          enemyHpBar.style.width = `${enemyHp}%`;
+
+          if (enemyHp === 0) {
+            enemyImg.src = "/img/slime_defeated.png";
+            messageEl.textContent = "敵を倒した！おめでとう！🎉";
+            attackBtn.disabled = true;
+          } else {
+            // 通常の顔に戻す
+            enemyImg.src = "/img/slime_normal.png";
+            messageEl.textContent = "攻撃成功！";
+          }
+        }, 500);
+      }
+    };
+
+    loadQuestion();
+  </script>
+</body>
+</html>
