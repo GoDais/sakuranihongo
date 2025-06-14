@@ -43,13 +43,18 @@
     }
   </style>
 </head>
-<body class="bg-blue-50 text-gray-800 p-6">
+<body class="flex flex-col min-h-screen font-sans bg-gray-50">
+
+
+    <!-- ヘッダー -->
+    <div id="header"></div>
+
   <div class="max-w-xl mx-auto bg-white p-6 rounded shadow text-center">
     <h1 class="text-2xl font-bold mb-4">Beat the monster！</h1>
 
     <!-- 敵キャラとHP -->
     <div class="mb-4">
-      <img id="enemyImg" src="/img/slime_normal.png" alt="スライム" class="w-50 h-50 mx-auto mb-2 transition-all duration-300">
+      <img id="enemyImg" src="/img/slime_normal.png" alt="スライム" class="w-40 h-40 mx-auto mb-2 transition-all duration-300">
       <p class="text-lg font-semibold">Enemy's Hit Point: <span id="enemyHp">100</span></p>
       <div class="w-full bg-gray-200 h-4 rounded">
         <div id="enemyHpBar" class="bg-red-500 h-4 rounded" style="width: 100%;"></div>
@@ -65,6 +70,26 @@
     <!-- アニメーションメッセージ -->
     <p id="message" class="h-8 mt-4"></p>
   </div>
+
+  <!-- フッター -->
+<footer class="bg-gray-200 text-center text-sm p-4 text-gray-600">
+  <nav class="mb-2">
+    <a href="/privacy.html" class="mx-2 hover:underline">
+      プライバシーポリシー / Privacy Policy
+    </a>
+    |
+    <a href="/about.html" class="mx-2 hover:underline">
+      運営者情報 / About
+    </a>
+    |
+    <a href="/contact.html" class="mx-2 hover:underline">
+      お問い合わせ / Contact
+    </a>
+  </nav>
+  © 2025 Sakura Nihongo. All rights reserved.<br>
+  本アプリの日本語単語リストはオープンデータ（MIT/CC0/Public Domain）や自作データをもとにしています。<br>
+  Japanese vocabulary lists in this app are based on open data (MIT/CC0/Public Domain) and original data.
+</footer>
 
   <script>
         const questions = [
@@ -165,7 +190,24 @@
       loadQuestion();
     }
 
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    shuffleArray(questions);
     loadQuestion();
+  
   </script>
+
+     <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+            document.getElementById('header').innerHTML = data;
+            });
+    </script>
 </body>
 </html>
