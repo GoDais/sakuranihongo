@@ -4,20 +4,20 @@
   <meta charset="UTF-8" />
   <title>助詞クイズバトル</title>
   <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes shake {
-        0% { transform: translate(0, 0); }
-        20% { transform: translate(-5px, 0); }
-        40% { transform: translate(5px, 0); }
-        60% { transform: translate(-5px, 0); }
-        80% { transform: translate(5px, 0); }
-        100% { transform: translate(0, 0); }
-        }
+  <style>
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-5px, 0); }
+      40% { transform: translate(5px, 0); }
+      60% { transform: translate(-5px, 0); }
+      80% { transform: translate(5px, 0); }
+      100% { transform: translate(0, 0); }
+    }
 
-        .shake {
-        animation: shake 0.4s ease-in-out;
-        }
-    </style>
+    .shake {
+      animation: shake 0.4s ease-in-out;
+    }
+  </style>
 </head>
 <body class="bg-blue-50 text-gray-800 p-6">
   <div class="max-w-xl mx-auto bg-white p-6 rounded shadow text-center">
@@ -25,17 +25,11 @@
 
     <!-- 敵キャラとHP -->
     <div class="mb-4">
-      <img id="enemyImg" src="/img/slime_normal.png" alt="スライム" class="w-40 h-40 mx-auto mb-2 transition-all duration-300">
+      <img id="enemyImg" src="/img/slime_normal.png" alt="スライム" class="w-70 h-70 mx-auto mb-2 transition-all duration-300">
       <p class="text-lg font-semibold">敵のHP: <span id="enemyHp">100</span></p>
       <div class="w-full bg-gray-200 h-4 rounded">
         <div id="enemyHpBar" class="bg-red-500 h-4 rounded" style="width: 100%;"></div>
       </div>
-    </div>
-
-    <!-- パワーと攻撃ボタン -->
-    <div class="mb-4">
-      <p class="text-lg font-semibold">あなたのパワー: <span id="power">0</span></p>
-      <button id="attackBtn" class="bg-red-600 text-white px-4 py-2 mt-2 rounded disabled:opacity-50" disabled>攻撃！</button>
     </div>
 
     <!-- クイズ問題 -->
@@ -48,23 +42,50 @@
   </div>
 
   <script>
-    const questions = [
-      { text: "私は日本語___勉強しています。", choices: ["を", "が", "は"], answer: "を" },
-      { text: "彼___サッカーが上手です。", choices: ["が", "は", "を"], answer: "は" },
-      { text: "田中さん___来ましたか？", choices: ["は", "が", "を"], answer: "が" },
-    ];
+        const questions = [
+        // 「は・が・を」系（15問）
+        { text: "私は日本語___勉強しています。", choices: ["を", "が", "は"], answer: "を" },
+        { text: "彼___サッカーが上手です。", choices: ["が", "は", "を"], answer: "は" },
+        { text: "田中さん___来ましたか？", choices: ["は", "が", "を"], answer: "が" },
+        { text: "この本___読みましたか？", choices: ["が", "を", "は"], answer: "を" },
+        { text: "山田さん___先生です。", choices: ["が", "は", "を"], answer: "は" },
+        { text: "猫___ベッドで寝ています。", choices: ["が", "を", "は"], answer: "が" },
+        { text: "私は寿司___食べたいです。", choices: ["を", "が", "は"], answer: "を" },
+        { text: "妹___学生です。", choices: ["が", "を", "は"], answer: "は" },
+        { text: "昨日、映画___見ました。", choices: ["が", "を", "は"], answer: "を" },
+        { text: "この人___有名です。", choices: ["が", "を", "は"], answer: "は" },
+        { text: "弟___走っています。", choices: ["が", "を", "は"], answer: "が" },
+        { text: "私は音楽___聞きます。", choices: ["を", "が", "は"], answer: "を" },
+        { text: "お母さん___買い物に行きました。", choices: ["は", "を", "が"], answer: "は" },
+        { text: "学生___本を読みました。", choices: ["が", "を", "は"], answer: "が" },
+        { text: "あなた___友達です。", choices: ["が", "を", "は"], answer: "は" },
+
+        // 「に・で・へ」系（15問）
+        { text: "公園___行きます。", choices: ["で", "に", "へ"], answer: "へ" },
+        { text: "家___帰ります。", choices: ["に", "で", "へ"], answer: "に" },
+        { text: "図書館___勉強します。", choices: ["で", "に", "へ"], answer: "で" },
+        { text: "駅___人がたくさんいます。", choices: ["に", "で", "へ"], answer: "に" },
+        { text: "会社___働いています。", choices: ["で", "に", "へ"], answer: "で" },
+        { text: "彼女___手紙を書きました。", choices: ["へ", "で", "に"], answer: "に" },
+        { text: "スーパー___買い物をします。", choices: ["に", "で", "へ"], answer: "で" },
+        { text: "映画館___行きたいです。", choices: ["で", "に", "へ"], answer: "に" },
+        { text: "教室___入りました。", choices: ["へ", "で", "に"], answer: "に" },
+        { text: "病院___お見舞いに行きます。", choices: ["で", "に", "へ"], answer: "へ" },
+        { text: "東京___旅行に行きます。", choices: ["で", "に", "へ"], answer: "へ" },
+        { text: "学校___友達と話しました。", choices: ["で", "に", "へ"], answer: "で" },
+        { text: "友達___プレゼントをあげました。", choices: ["に", "で", "を"], answer: "に" },
+        { text: "駅___電車に乗りました。", choices: ["で", "に", "へ"], answer: "で" },
+        { text: "先生___質問をしました。", choices: ["を", "に", "で"], answer: "に" }
+        ];
 
     let current = 0;
-    let power = 0;
     let enemyHp = 100;
 
     const enemyImg = document.getElementById("enemyImg");
     const questionEl = document.getElementById("question");
     const choicesEl = document.getElementById("choices");
-    const powerEl = document.getElementById("power");
     const enemyHpEl = document.getElementById("enemyHp");
     const enemyHpBar = document.getElementById("enemyHpBar");
-    const attackBtn = document.getElementById("attackBtn");
     const messageEl = document.getElementById("message");
 
     function loadQuestion() {
@@ -83,31 +104,10 @@
     function checkAnswer(choice) {
       const q = questions[current];
       if (choice === q.answer) {
-        messageEl.textContent = "正解！パワー +10";
-        power += 10;
-        powerEl.textContent = power;
-        if (power >= 30) attackBtn.disabled = false;
-      } else {
-        messageEl.textContent = "不正解…もう一度挑戦！";
-      }
-
-      current = (current + 1) % questions.length;
-      setTimeout(() => {
-        messageEl.textContent = "";
-        loadQuestion();
-      }, 1000);
-    }
-
-    attackBtn.onclick = () => {
-      if (power >= 30 && enemyHp > 0) {
-        power -= 30;
-        powerEl.textContent = power;
-        if (power < 30) attackBtn.disabled = true;
+        messageEl.textContent = "正解！攻撃！";
 
         // ダメージ演出
         enemyImg.src = "/img/slime_hurt.png";
-
-        // ← ここで .shake を追加
         enemyImg.classList.add("shake");
 
         setTimeout(() => {
@@ -119,17 +119,26 @@
           if (enemyHp === 0) {
             enemyImg.src = "/img/slime_defeated.png";
             messageEl.textContent = "敵を倒した！おめでとう！🎉";
-            attackBtn.disabled = true;
           } else {
-            // 通常の顔に戻す
             enemyImg.src = "/img/slime_normal.png";
-            messageEl.textContent = "攻撃成功！";
-          }
-            // ← アニメーション終了後に shake クラスを除去
             enemyImg.classList.remove("shake");
+            messageEl.textContent = "";
+            nextQuestion();
+          }
         }, 500);
+      } else {
+        messageEl.textContent = "不正解…もう一度挑戦！";
+        setTimeout(() => {
+          messageEl.textContent = "";
+          nextQuestion();
+        }, 1000);
       }
-    };
+    }
+
+    function nextQuestion() {
+      current = (current + 1) % questions.length;
+      loadQuestion();
+    }
 
     loadQuestion();
   </script>
